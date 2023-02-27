@@ -1,9 +1,15 @@
 import React from 'react'
+import { Text, View, Button } from 'react-native'
+import { Footer } from '../footer/footer'
 
-function List() {
+
+export const List = () =>
+{
   return (
-    <div>list</div>
+    <View>
+      <Text>list</Text>
+      <Footer />
+    </View>
+
   )
 }
-
-export default List
