@@ -8,6 +8,7 @@ import { List } from './components/habit_list/list'
 import { Card } from './components/habit_card/card';
 import { Rewards } from './components/reward_page/rewards';
 import { Profile } from './components/user_profile/profile';
+import Information from './components/information/information';
 
 
 
@@ -18,11 +19,12 @@ const Stack = createNativeStackNavigator()
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='login' component={Login} options={{title : 'login'}}/>
-        <Stack.Screen name='list' component={List} options={{title : 'list'}}/>
+        <Stack.Screen name='login' component={Login} options={{title : 'Login'}}/>
+        <Stack.Screen name='list' component={List} options={{title : 'Your Habits'}}/>
         <Stack.Screen name ='card' component={Card} options={{title : 'card'}}/>
         <Stack.Screen name ='rewards' component={Rewards} options={{title : 'rewards'}}/>
         <Stack.Screen name ='profile' component={Profile} options={{title : 'profile'}}/>
+        <Stack.Screen name ='information' component={Information} options={{title : 'Help'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

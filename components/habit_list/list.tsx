@@ -1,14 +1,13 @@
 import React from 'react'
-import { Text, View, Button } from 'react-native'
+import { Text, View, Button, ScrollView, StyleSheet } from 'react-native'
 import { Footer } from '../footer/footer'
 
 
-export const List = () =>
+export const List = ({navigation} :any) =>
 {
   return (
     <View>
-      <Text>list</Text>
-      <Footer />
+      <Footer navigation={navigation}/>
     </View>
 
   )
