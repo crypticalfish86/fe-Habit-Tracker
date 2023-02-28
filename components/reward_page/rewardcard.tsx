@@ -1,6 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faEraser,
+  faPen,
+  faCircleDollarToSlot,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface RewardCardProps {
   rewards_name: string;
@@ -61,15 +67,23 @@ export const RewardCard = (props: RewardCardProps) => {
         <Text>Reward: {rewards_name}</Text>
         <Text>Description: {rewards_description}</Text>
         <Text>Cost: {rewards_cost}</Text>
-        <Text>{user_id}</Text>
-        <Pressable
-          style={styles.button}
-          onPress={(event) => {
-            buyReward(event);
-          }}
-        >
-          <Text style={styles.buttontext}>Buy Reward</Text>
-        </Pressable>
+        <View style={styles.buttoncontainer}>
+          <Pressable
+            style={styles.button}
+            onPress={(event) => {
+              buyReward(event);
+            }}
+          >
+            <FontAwesomeIcon icon={faCircleDollarToSlot} size={20} />
+          </Pressable>
+          <Pressable style={styles.button}>
+            <FontAwesomeIcon icon={faPen} size={20} />
+          </Pressable>
+          <Pressable style={styles.button}>
+            <FontAwesomeIcon icon={faEraser} size={20} />
+          </Pressable>
+        </View>
+
         {buttonPressed && canBuyReward === true && (
           <Text>You deserved this!</Text>
         )}
@@ -100,22 +114,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     marginVertical: 12,
   },
-  button: {
+  buttoncontainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
     alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 6,
-    elevation: 3,
-    backgroundColor: "black",
-    marginLeft: 60,
-    marginRight: 60,
+    gap: 5,
   },
-  buttontext: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "white",
+  button: {
+    marginHorizontal: 5,
   },
 });
