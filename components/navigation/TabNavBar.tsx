@@ -8,10 +8,10 @@ import {
   faQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { List } from "../components/habit_list/list";
-import { Rewards } from "../components/reward_page/rewards";
-import Information from "../components/information/information";
-import Profile from "../components/user_profile/profile";
+import { List } from "../habit_list/list";
+import { Rewards } from "../reward_page/rewards";
+import Information from "../information/information";
+import Profile from "../user_profile/profile";
 
 const habitName = "Habits";
 const infoName = "Information";

@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login } from "./components/login_page/login";
 import { Card } from "./components/habit_card/card";
-import TabNavBar from "./navigation/TabNavBar";
+import TabNavBar from "./components/navigation/TabNavBar";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
