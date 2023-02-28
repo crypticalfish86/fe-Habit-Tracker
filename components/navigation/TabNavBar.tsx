@@ -11,7 +11,7 @@ import {
 import { List } from "../habit_list/list";
 import { Rewards } from "../reward_page/rewards";
 import Information from "../information/information";
-import Profile from "../user_profile/profile";
+ import {Profile} from "../user_profile/profile";
 
 const habitName = "Habits";
 const infoName = "Information";
