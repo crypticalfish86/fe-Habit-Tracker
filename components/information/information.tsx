@@ -1,14 +1,15 @@
-import React from 'react'
-import {Text, View} from 'react-native'
-import { Footer } from '../footer/footer'
+import * as React from "react";
+import { View, Text } from "react-native";
 
-const Information = ({navigation} : any) => {
+export default function Information({ navigation }: any) {
   return (
-    <View>
-    <Text>Information</Text>
-    <Footer navigation={navigation}/>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text
+        onPress={() => navigation.navigate("Information")}
+        style={{ fontSize: 26, fontWeight: "bold" }}
+      >
+        Information
+      </Text>
     </View>
-  )
+  );
 }
-
-export default Information
