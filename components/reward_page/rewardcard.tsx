@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, View, Text } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useState } from "react";
 
 interface RewardCardProps {
@@ -56,24 +56,66 @@ export const RewardCard = (props: RewardCardProps) => {
   };
 
   return (
-    <View>
-      <Text>Reward:{rewards_name}</Text>
-      <Text>Description:{rewards_description}</Text>
-      <Text>Cost:{rewards_cost}</Text>
-      <Text>{user_id}</Text>
-      <Button
-        title="reward-buy"
-        onPress={(event) => {
-          buyReward(event);
-        }}
-      />
-      {buttonPressed && canBuyReward === true && (
-        <Text>You deserved this!</Text>
-      )}
+    <View style={styles.card}>
+      <View style={styles.cardContent}>
+        <Text>Reward: {rewards_name}</Text>
+        <Text>Description: {rewards_description}</Text>
+        <Text>Cost: {rewards_cost}</Text>
+        <Text>{user_id}</Text>
+        <Pressable
+          style={styles.button}
+          onPress={(event) => {
+            buyReward(event);
+          }}
+        >
+          <Text style={styles.buttontext}>Buy Reward</Text>
+        </Pressable>
+        {buttonPressed && canBuyReward === true && (
+          <Text>You deserved this!</Text>
+        )}
 
-      {buttonPressed && !canBuyReward === true && (
-        <Text>Sorry, get to work!</Text>
-      )}
+        {buttonPressed && !canBuyReward === true && (
+          <Text>Sorry, get to work!</Text>
+        )}
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    borderRadius: 6,
+    elevation: 3,
+    backgroundColor: "#fff",
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: "#333",
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    marginHorizontal: 4,
+    marginVertical: 6,
+    marginLeft: 15,
+    marginRight: 15,
+  },
+  cardContent: {
+    marginHorizontal: 24,
+    marginVertical: 12,
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 6,
+    elevation: 3,
+    backgroundColor: "black",
+    marginLeft: 60,
+    marginRight: 60,
+  },
+  buttontext: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
+});
