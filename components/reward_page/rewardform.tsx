@@ -11,7 +11,7 @@ export const RewardForm = (props: any) => {
   return (
     <View style={globalStyles.container}>
       <Formik
-        initialValues={{ name: "", description: "", cost: "" }}
+        initialValues={{ rewards_name: "", rewards_description: "", rewards_cost: ""}}
         onSubmit={(values: any, actions) => {
           actions.resetForm();
           postReward(values);
@@ -23,19 +23,19 @@ export const RewardForm = (props: any) => {
               <TextInput
                 style={globalStyles.input}
                 placeholder="Reward name"
-                onChangeText={formikProps.handleChange("name")}
+                onChangeText={formikProps.handleChange("rewards_name")}
                 value={formikProps.values.name}
               />
               <TextInput
                 style={globalStyles.input}
                 placeholder="Reward description"
-                onChangeText={formikProps.handleChange("description")}
+                onChangeText={formikProps.handleChange("rewards_description")}
                 value={formikProps.values.description}
               />
               <TextInput
                 style={globalStyles.input}
                 placeholder="Reward cost"
-                onChangeText={formikProps.handleChange("cost")}
+                onChangeText={formikProps.handleChange("rewards_cost")}
                 value={formikProps.values.cost}
                 keyboardType="numeric"
               />

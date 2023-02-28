@@ -21,6 +21,13 @@ interface RewardsProps {
   user_id: number;
 }
 
+interface Body {
+  rewards_name : string;
+  rewards_description : string;
+  rewards_cost : string
+  user_id : number
+}
+
 interface UserRewards {
   rewards_name: string;
   rewards_description: string;
@@ -49,19 +56,23 @@ export const Rewards = () => {
     fetchData();
   }, [user_id]);
 
-  const postReward = async (event: any, Body: Object) => {
-    event.PreventDefault();
+  const postReward = async (Body: Body) => {
+    Body.rewards_cost = JSON.parse(Body.rewards_cost)
+    Body.user_id = user_id
     const requestBody = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Body),
     };
+    console.log(requestBody)
     try {
       const response = await fetch(
-        `https://final-api.onrender.com/users/${user_id}/rewards`
+        `https://final-api.onrender.com/rewards/`, requestBody
       );
+      
       const data = await response.json();
-      setUserRewards(data);
+      console.log(data)
+      setUserRewards((currRewards) => {return [data , ...currRewards]});
     } catch (error) {
       console.log(error);
     }
@@ -80,7 +91,7 @@ export const Rewards = () => {
                 style={{ ...styles.modalToggle, ...styles.modalClose }}
               />
             </Pressable>
-            <RewardForm postReward={postReward} />
+            <RewardForm postReward={postReward} user_id={user_id} />
           </View>
         </TouchableWithoutFeedback>
       </Modal>

@@ -27,32 +27,28 @@ export const RewardCard = (props: RewardCardProps) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://final-api.onrender.com/users/${user_id}/currency`
+          `https://final-api.onrender.com/users/${user_id}`
         );
         const data = await response.json();
+        data.currency = parseInt(data.currency)
 
         if (data.currency < rewards_cost) {
           setCanBuyReward(false);
         } else if (data.currency > rewards_cost) {
           const newCurrency = data.currency - rewards_cost;
+          data.currency = newCurrency
           const patchResponse = await fetch(
-            `https://final-api.onrender.com/users/${user_id}/currency`,
+            `https://final-api.onrender.com/users/${user_id}`,
             {
               method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({
-                newData: newCurrency,
-              }),
+              body: JSON.stringify(data)
             }
           );
 
-          const patchedData = await patchResponse.json();
-
           setCanBuyReward(true);
-          console.log(patchedData);
-          console.log(newCurrency);
         }
       } catch (error) {
         console.log("Error:", error);
@@ -69,6 +65,7 @@ export const RewardCard = (props: RewardCardProps) => {
         <Text>Cost: {rewards_cost}</Text>
         <View style={styles.buttoncontainer}>
           <Pressable
+            id="buy"
             style={styles.button}
             onPress={(event) => {
               buyReward(event);
@@ -76,10 +73,10 @@ export const RewardCard = (props: RewardCardProps) => {
           >
             <FontAwesomeIcon icon={faCircleDollarToSlot} size={20} />
           </Pressable>
-          <Pressable style={styles.button}>
+          <Pressable id="patch" style={styles.button}>
             <FontAwesomeIcon icon={faPen} size={20} />
           </Pressable>
-          <Pressable style={styles.button}>
+          <Pressable id="delete" style={styles.button}>
             <FontAwesomeIcon icon={faEraser} size={20} />
           </Pressable>
         </View>
