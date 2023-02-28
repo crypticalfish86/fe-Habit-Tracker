@@ -30,13 +30,13 @@ export const RewardCard = (props: RewardCardProps) => {
           `https://final-api.onrender.com/users/${user_id}`
         );
         const data = await response.json();
-        data.currency = parseInt(data.currency)
+        data.currency = parseInt(data.currency);
 
         if (data.currency < rewards_cost) {
           setCanBuyReward(false);
         } else if (data.currency > rewards_cost) {
           const newCurrency = data.currency - rewards_cost;
-          data.currency = newCurrency
+          data.currency = newCurrency;
           const patchResponse = await fetch(
             `https://final-api.onrender.com/users/${user_id}`,
             {
@@ -44,7 +44,7 @@ export const RewardCard = (props: RewardCardProps) => {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(data)
+              body: JSON.stringify(data),
             }
           );
 
@@ -55,6 +55,36 @@ export const RewardCard = (props: RewardCardProps) => {
       }
     };
     fetchData();
+  };
+
+  const deleteReward = (event: any) => {
+    event.preventDefault();
+    return fetch(`https://final-api.onrender.com/rewards/`)
+      .then((response) => response.json())
+      .then((response) => {
+        return response.rewards;
+      })
+      .then((rewards) => {
+        rewards.map((reward: any) => {
+          if (
+            reward.rewards_name === rewards_name &&
+            reward.rewards_description === rewards_description &&
+            reward.user_id === user_id
+          ) {
+            return reward;
+          }
+        });
+      })
+      .then((reward: any) => {
+        const rewardJSON = JSON.parse(reward);
+        const id = rewardJSON.id;
+        return fetch(`https://final-api.onrender.com/rewards/${id}`, {
+          method: "DELETE",
+        });
+      })
+      .then((response: any) => {
+        return response;
+      });
   };
 
   return (
@@ -76,7 +106,13 @@ export const RewardCard = (props: RewardCardProps) => {
           <Pressable id="patch" style={styles.button}>
             <FontAwesomeIcon icon={faPen} size={20} />
           </Pressable>
-          <Pressable id="delete" style={styles.button}>
+          <Pressable
+            id="delete"
+            style={styles.button}
+            onPress={(event) => {
+              deleteReward(event);
+            }}
+          >
             <FontAwesomeIcon icon={faEraser} size={20} />
           </Pressable>
         </View>

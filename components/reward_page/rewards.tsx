@@ -15,17 +15,15 @@ import { useRoute } from "@react-navigation/native";
 import { RewardForm } from "./rewardform";
 import { globalStyles } from "../../styles/styles";
 
-// user_id hardcoded in App.tsx
-
 interface RewardsProps {
   user_id: number;
 }
 
 interface Body {
-  rewards_name : string;
-  rewards_description : string;
-  rewards_cost : string
-  user_id : number
+  rewards_name: string;
+  rewards_description: string;
+  rewards_cost: string;
+  user_id: number;
 }
 
 interface UserRewards {
@@ -57,22 +55,24 @@ export const Rewards = () => {
   }, [user_id]);
 
   const postReward = async (Body: Body) => {
-    Body.rewards_cost = JSON.parse(Body.rewards_cost)
-    Body.user_id = user_id
+    Body.rewards_cost = JSON.parse(Body.rewards_cost);
+    Body.user_id = user_id;
     const requestBody = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Body),
     };
-    console.log(requestBody)
     try {
       const response = await fetch(
-        `https://final-api.onrender.com/rewards/`, requestBody
+        `https://final-api.onrender.com/rewards/`,
+        requestBody
       );
-      
+
       const data = await response.json();
-      console.log(data)
-      setUserRewards((currRewards) => {return [data , ...currRewards]});
+      console.log(data);
+      setUserRewards((currRewards) => {
+        return [data, ...currRewards];
+      });
     } catch (error) {
       console.log(error);
     }
