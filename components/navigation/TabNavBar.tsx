@@ -11,12 +11,14 @@ import {
 import { List } from "../habit_list/list";
 import { Rewards } from "../reward_page/rewards";
 import Information from "../information/information";
- import {Profile} from "../user_profile/profile";
+import {Profile} from "../user_profile/profile";
+import {Login} from "../login_page/login";
 
 const habitName = "Habits";
 const infoName = "Information";
 const profileName = "Profile";
 const rewardName = "Rewards";
+const loginName = "Login!";
 
 const Tab = createBottomTabNavigator();
 
@@ -46,7 +48,7 @@ export default function TabNavBar() {
         tabBarActiveTintColor: "tomato",
         tabBarInactiveTintColor: "grey",
         tabBarLabelStyle: { paddingBottom: 10, fontSize: 10 },
-        tabBarStyle: { padding: 10, height: 80 },
+        tabBarStyle: { padding: 10, height: 60 },
       }}
     >
       <Tab.Screen
@@ -69,6 +71,11 @@ export default function TabNavBar() {
         component={Rewards}
         initialParams={{ user_id: 7 }}
         options={{ title: "Your Rewards" }}
+      />
+      <Tab.Screen
+        name={loginName}
+        component={Login}
+        options={{ title: "Log in" }}
       />
     </Tab.Navigator>
   );
