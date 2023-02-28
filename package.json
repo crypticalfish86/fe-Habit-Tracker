@@ -20,6 +20,8 @@
     "axios": "^1.3.4",
     "expo": "^48.0.4",
     "expo-status-bar": "~1.4.4",
+    "mdb-react-template": "file:..",
+    "mdb-react-ui-kit": "^5.1.0",
     "react": "18.2.0",
     "react-icons": "^4.7.1",
     "react-native": "0.71.3",
