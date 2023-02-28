@@ -27,7 +27,7 @@ export const Login = ({navigation} : any) => {
         placeholder="Password"
         secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('list')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('profile')}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>

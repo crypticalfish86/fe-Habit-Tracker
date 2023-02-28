@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login } from "./components/login_page/login";
 import { Card } from "./components/habit_card/card";
 import TabNavBar from "./components/navigation/TabNavBar";
+import { Profile } from "./components/user_profile/profile";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -20,6 +21,11 @@ export default function App() {
           name="login"
           component={Login}
           options={{ title: "Login" }}
+        />
+        <Stack.Screen
+          name="profile"
+          component={Profile}
+          options={{ title: "user page" }}
         />
         <Stack.Screen
           name="card"
