@@ -1,4 +1,6 @@
-import { Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, Modal, Keyboard, TouchableWithoutFeedback } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 import { RewardCard } from "./rewardcard";
@@ -21,6 +23,7 @@ interface UserRewards {
 
 export const Rewards = () => {
   const route = useRoute();
+  const [modalOpen, setModalOpen] = useState(false)
   const { user_id } = route.params as RewardsProps;
   const [userRewards, setUserRewards] = useState<UserRewards[]>([]);
 
@@ -57,11 +60,27 @@ export const Rewards = () => {
     } catch (error) {
       console.log(error);
     }
+    setModalOpen(false)
   };
 
 
   return (
     <View>
+      <Modal visible={modalOpen} animationType='slide'>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.modalContent}>
+            {/* <FontAwesomeIcon 
+              icon={faPlus}
+              size={24} 
+              style={{...styles.modalToggle, ...styles.modalClose}} 
+              onPress={() => setModalOpen(false)} 
+            /> */}
+            <Button onPress={() => setModalOpen(false)}/>
+            <RewardForm postReward={postReward} />
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
       {userRewards.map((reward: UserRewards, index: number) => (
         <RewardCard
           key={uuid()}
@@ -75,3 +94,23 @@ export const Rewards = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  modalToggle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#f2f2f2',
+    padding: 10,
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  modalClose: {
+    marginTop: 20,
+    marginBottom: 0,
+  },
+  modalContent: {
+    flex: 1,
+  }
+});
