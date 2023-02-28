@@ -12,7 +12,7 @@ export const Profile = () => {
     'https://www.bootdey.com/image/280x280/008B8B/000000'
   ]);
   const [habitCount, setPostCount] = useState(10);
-  const [streakCount, setStreakCount] = useState(20);
+  const [streakCount, setStreakCount] = useState(17);
   const [achieveCount, setAchieveCount] = useState(3);
   return (
     <View style={styles.container}>
