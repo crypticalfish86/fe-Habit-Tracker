@@ -62,28 +62,29 @@ export const RewardCard = (props: RewardCardProps) => {
     return fetch(`https://final-api.onrender.com/rewards/`)
       .then((response) => response.json())
       .then((response) => {
-        return response.rewards;
+        console.log(response, "<--------RESPONSE");
+        return response;
       })
       .then((rewards) => {
-        rewards.map((reward: any) => {
+        console.log(rewards);
+        const matchingReward = rewards.filter((reward: any) => {
           if (
             reward.rewards_name === rewards_name &&
             reward.rewards_description === rewards_description &&
             reward.user_id === user_id
           ) {
+            console.log(reward);
             return reward;
           }
         });
-      })
-      .then((reward: any) => {
-        const rewardJSON = JSON.parse(reward);
-        const id = rewardJSON.id;
-        return fetch(`https://final-api.onrender.com/rewards/${id}`, {
-          method: "DELETE",
-        });
-      })
-      .then((response: any) => {
-        return response;
+        const rewardToDelete = matchingReward[0];
+        console.log(rewardToDelete);
+        return fetch(
+          `https://final-api.onrender.com/rewards/${rewardToDelete.id}`,
+          {
+            method: "DELETE",
+          }
+        );
       });
   };
 
