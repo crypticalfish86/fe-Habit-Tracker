@@ -76,7 +76,6 @@ export default function TabNavBar() {
       <Tab.Screen
         name={rewardName}
         component={Rewards}
-        initialParams={{ user_id: 7 }}
         options={{ title: "Your Rewards" }}
       />
       <Tab.Screen
