@@ -15,8 +15,8 @@ import {
 import { List } from "../habit_list/list";
 import { Rewards } from "../reward_page/rewards";
 import Information from "../information/information";
-import {Profile} from "../user_profile/profile";
-import {Login} from "../login_page/login";
+import { Profile } from "../user_profile/profile";
+import { Login } from "../login_page/login";
 
 const habitName = "Habits";
 const infoName = "Information";
@@ -45,7 +45,7 @@ export default function TabNavBar() {
           } else if (rn === rewardName) {
             iconName = focused ? faGift : faGift;
           } else if (rn === loginName) {
-            iconName = focused? faGear : faGear;
+            iconName = focused ? faRightToBracket : faRightToBracket;
           }
 
           return <FontAwesomeIcon icon={iconName} size={18} color={color} />;
@@ -84,7 +84,7 @@ export default function TabNavBar() {
         options={{
           title: user ? user.split(" ")[0] : 'Log in',
           tabBarIcon: ({ focused, color }) => {
-            let iconName = user? faRightFromBracket : faRightToBracket;
+            let iconName = user ? faRightFromBracket : faRightToBracket;
             return <FontAwesomeIcon icon={iconName} size={18} color={color} />;
           },
         }}
