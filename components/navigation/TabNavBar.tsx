@@ -7,6 +7,7 @@ import {
   faGift,
   faList,
   faUser,
+  faStar,
   faQuestion,
   faRightFromBracket,
   faRightToBracket,
@@ -14,12 +15,12 @@ import {
 
 import { List } from "../habit_list/list";
 import { Rewards } from "../reward_page/rewards";
-import Information from "../information/information";
+import Achievements from "../achievements/achievements";
 import { Profile } from "../user_profile/profile";
 import { Login } from "../login_page/login";
 
 const habitName = "Habits";
-const infoName = "Information";
+const achieveName = "Achievements";
 const profileName = "Profile";
 const rewardName = "Rewards";
 const loginName = "Login!";
@@ -38,8 +39,8 @@ export default function TabNavBar() {
 
           if (rn === habitName) {
             iconName = focused ? faList : faList;
-          } else if (rn === infoName) {
-            iconName = focused ? faQuestion : faQuestion;
+          } else if (rn === achieveName) {
+            iconName = focused ? faStar : faStar;
           } else if (rn === profileName) {
             iconName = focused ? faUser : faUser;
           } else if (rn === rewardName) {
@@ -63,9 +64,9 @@ export default function TabNavBar() {
         options={{ title: "Your Habits" }}
       />
       <Tab.Screen
-        name={infoName}
-        component={Information}
-        options={{ title: "Help Page" }}
+        name={achieveName}
+        component={Achievements}
+        options={{ title: "Achievements" }}
       />
       <Tab.Screen
         name={profileName}
