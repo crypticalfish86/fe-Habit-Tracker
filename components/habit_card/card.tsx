@@ -47,18 +47,20 @@ const handleDelete = ({id}:any) => {
   })
 }
 
-// const handleCheck = ({id}:any) => {
-//   console.log(id)
-//   axios.patch<UpdatedData>(`https://final-api.onrender.com/habits/${habitID}/`, )
-//       .then((response: AxiosResponse<UpdatedData>) => {
-//         console.log('Update successful', response.data);
-//         console.log(response.status);
-//       })
-//       .catch((error: any) => {
-//         console.error('Update failed>>>>>>>', error);
-//         console.log(error.message)
-//       });
-// }
+const handleCheck = ({habit_streak, id}:any) => {
+  console.log(id)
+  axios.patch<UpdatedData>(`https://final-api.onrender.com/habits/${id}/`, {
+    habit_streak :(habit_streak) + 1
+  })
+      .then((response: AxiosResponse<UpdatedData>) => {
+        console.log('Update successful', response.data);
+        console.log(response.status);
+      })
+      .catch((error: any) => {
+        console.error('Update failed>>>>>>>', error);
+        console.log(error.message)
+      });
+}
 
 export const Card = ( props: HabitCardProps) =>
 {
@@ -75,14 +77,15 @@ const navigation = useNavigation()
                   <Pressable
                   id='edit'
                   style={styles.button}
-                  onPress={() => navigation.navigate('cardEditor', {
-                    id: {id},
-                    habit_name: {habit_name},
-                    habit_category: {habit_category},
-                    habit_streak: {habit_streak},
-                    habit_type: {habit_type},
-                    user_id : {user_id}
-                  })}
+                  onPress={() => navigation.navigate('cardEditor', 
+                  // {
+                  //   id: {id},
+                  //   habit_name: {habit_name},
+                  //   habit_category: {habit_category},
+                  //   habit_streak: {habit_streak},
+                  //   habit_type: {habit_type},
+                  //   user_id : {user_id}}
+                    )}
                   >
                   <FontAwesomeIcon icon={faPen} size={20}/>  
                   </Pressable>
@@ -99,7 +102,7 @@ const navigation = useNavigation()
                   id='check'
                   style={styles.button}
                   onPress={() => {
-                    handleCheck({id})
+                    handleCheck({id, habit_streak})
                   }}
                   >
                     <FontAwesomeIcon icon={faCheck} size={20}/>

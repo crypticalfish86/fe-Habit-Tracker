@@ -87,19 +87,14 @@ export const CardEditor = ({route}:any, {navigation} : any) => {
   return (
     <View style={{margin: 20, marginTop: 100}}>
       <TextInput 
-      placeholder='habit name'
+      placeholder='Edit Habit Name'
       style={{borderWidth: 2, borderColor: 'skyblue', margin:20}}
       onChangeText={(text) => setName(text)}
       />
-      {/* <TextInput 
-      placeholder='habit type'
-      style={{borderWidth: 2, borderColor: 'skyblue', margin:20}}
-      onChangeText={(text) => setType(text)}
-      /> */}
          <SelectDropdown
       data={habitType}
       buttonStyle={styles.title}
-      defaultButtonText='Type'
+      defaultButtonText='Edit Type'
       onSelect={(selectedItem, index) => {
         setType(selectedItem)
       }}
@@ -107,27 +102,12 @@ export const CardEditor = ({route}:any, {navigation} : any) => {
        <SelectDropdown
       data={habitCategory}
       buttonStyle={styles.title}
-      defaultButtonText='Category'
+      defaultButtonText='Edit Cat'
       onSelect={(selectedItem, index) => {
         setCategory(selectedItem)
       }}
       />
-      {/* <TextInput 
-      placeholder='habit category'
-      style={styles.title}
-      onChangeText={(text) => setCategory(text)}
-      /> */}
-      <Button title='update' onPress={() => {handleSubmit()}}/>
-     
-
-
-      {/* <Button title='DELETE' onPress={() => {handleDelete()}}/> */}
-      {/* <Text> {habitID}</Text>
-      <Text> {name}</Text>
-      <Text> {category}</Text>
-      <Text> {type}</Text>
-      <Text> {streak}</Text>
-      <Text> {userID}</Text> */}
+      <Button title='Update Habit' onPress={() => {handleSubmit()}}/>
     </View>
   )
 }
