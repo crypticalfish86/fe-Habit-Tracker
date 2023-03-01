@@ -16,7 +16,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../user_profile/user_context";
 import { RewardCard } from "./rewardcard";
 import uuid from "react-uuid";
-import { useRoute } from "@react-navigation/native";
 import { RewardForm } from "./rewardform";
 import { globalStyles } from "../../styles/styles";
 
@@ -39,9 +38,7 @@ export interface UserRewards { // from get request
 }
 
 export const Rewards = () => {
-  //const route = useRoute();
   const [modalOpen, setModalOpen] = useState(false);
-  //const { user_id } = route.params as RewardsProps;
   const { user_id } = useContext(UserContext);
   const [userRewards, setUserRewards] = useState<UserRewards[]>([]);
   const [userCurrency, setUserCurrency] = useState<number>(0);
