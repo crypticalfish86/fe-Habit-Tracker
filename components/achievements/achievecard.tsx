@@ -12,8 +12,8 @@ export default function AchieveCard({
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
-        <Text>Name: {achievement_name}</Text>
         <Text>{achievement_img_url}</Text>
+        <Text>Name: {achievement_name}</Text>
         <Text>Description: {achievement_description}</Text>
         <Text>Reward: {achievement_reward}</Text>
       </View>

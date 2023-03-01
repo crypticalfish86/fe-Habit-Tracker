@@ -14,7 +14,7 @@ import Achievements from "../achievements/achievements";
 import Profile from "../user_profile/profile";
 
 const habitName = "Habits";
-const achieveName = "Information";
+const achieveName = "Achievements";
 const profileName = "Profile";
 const rewardName = "Rewards";
 

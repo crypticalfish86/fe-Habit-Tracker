@@ -5,8 +5,11 @@ import {
   Text,
   Modal,
   Keyboard,
+  ScrollView,
   TouchableWithoutFeedback,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
@@ -83,54 +86,58 @@ export const Rewards = () => {
   };
 
   return (
-    <View style={globalStyles.container}>
-      {userCurrency ? (
-        <View>
-          <Text>Current Currency: {userCurrency}</Text>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={globalStyles.container}>
+          {userCurrency ? (
+            <View>
+              <Text>Current Currency: {userCurrency}</Text>
+            </View>
+          ) : (
+            <View>
+              <Text>Loading...</Text>
+            </View>
+          )}
+
+          <Modal visible={modalOpen} animationType="slide">
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View style={styles.modalContent}>
+                <Pressable onPress={() => setModalOpen(false)}>
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    size={24}
+                    style={{ ...styles.modalToggle, ...styles.modalClose }}
+                  />
+                </Pressable>
+                <RewardForm postReward={postReward} user_id={user_id} />
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
+
+          <Pressable onPress={() => setModalOpen(true)}>
+            <FontAwesomeIcon
+              icon={faPlus}
+              size={24}
+              style={{ ...styles.modalToggle }}
+            />
+          </Pressable>
+
+          {userRewards.map((reward: UserRewards, index: number) => (
+            <RewardCard
+              key={uuid()}
+              rewards_name={reward.rewards_name}
+              rewards_description={reward.rewards_description}
+              rewards_cost={reward.rewards_cost}
+              user_id={reward.user_id}
+              userRewards={userRewards}
+              setUserRewards={setUserRewards}
+              userCurrency={userCurrency}
+              setUserCurrency={setUserCurrency}
+            />
+          ))}
         </View>
-      ) : (
-        <View>
-          <Text>Loading...</Text>
-        </View>
-      )}
-
-      <Modal visible={modalOpen} animationType="slide">
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.modalContent}>
-            <Pressable onPress={() => setModalOpen(false)}>
-              <FontAwesomeIcon
-                icon={faXmark}
-                size={24}
-                style={{ ...styles.modalToggle, ...styles.modalClose }}
-              />
-            </Pressable>
-            <RewardForm postReward={postReward} user_id={user_id} />
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-
-      <Pressable onPress={() => setModalOpen(true)}>
-        <FontAwesomeIcon
-          icon={faPlus}
-          size={24}
-          style={{ ...styles.modalToggle }}
-        />
-      </Pressable>
-
-      {userRewards.map((reward: UserRewards, index: number) => (
-        <RewardCard
-          key={uuid()}
-          rewards_name={reward.rewards_name}
-          rewards_description={reward.rewards_description}
-          rewards_cost={reward.rewards_cost}
-          user_id={reward.user_id}
-          userRewards={userRewards}
-          setUserRewards={setUserRewards}
-          userCurrency={userCurrency}
-          setUserCurrency={setUserCurrency}
-        />
-      ))}
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
