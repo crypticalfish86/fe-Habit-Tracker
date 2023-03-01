@@ -2,13 +2,14 @@ import {
   StyleSheet,
   Pressable,
   View,
+  Text,
   Modal,
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { RewardCard } from "./rewardcard";
 import uuid from "react-uuid";
 import { useRoute } from "@react-navigation/native";
@@ -38,20 +39,23 @@ export const Rewards = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const { user_id } = route.params as RewardsProps;
   const [userRewards, setUserRewards] = useState<UserRewards[]>([]);
+  const [userCurrency, setUserCurrency] = useState<number>(0);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://final-api.onrender.com/users/${user_id}/rewards`
-        );
-        const data = await response.json();
-        setUserRewards(data);
-      } catch (error) {
+    Promise.all([
+      fetch(`https://final-api.onrender.com/users/${user_id}/rewards`),
+      fetch(`https://final-api.onrender.com/users/${user_id}/`),
+    ])
+      .then((responses) =>
+        Promise.all(responses.map((response) => response.json()))
+      )
+      .then(([rewardsData, currencyData]) => {
+        setUserRewards(rewardsData);
+        setUserCurrency(currencyData.currency);
+      })
+      .catch((error) => {
         console.log(error);
-      }
-    };
-    fetchData();
+      });
   }, [user_id]);
 
   const postReward = async (Body: Body) => {
@@ -80,6 +84,16 @@ export const Rewards = () => {
 
   return (
     <View style={globalStyles.container}>
+      {userCurrency ? (
+        <View>
+          <Text>Current Currency: {userCurrency}</Text>
+        </View>
+      ) : (
+        <View>
+          <Text>Loading...</Text>
+        </View>
+      )}
+
       <Modal visible={modalOpen} animationType="slide">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.modalContent}>
@@ -112,6 +126,8 @@ export const Rewards = () => {
           user_id={reward.user_id}
           userRewards={userRewards}
           setUserRewards={setUserRewards}
+          userCurrency={userCurrency}
+          setUserCurrency={setUserCurrency}
         />
       ))}
     </View>
