@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
+import { View, Text, Image, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { UserContext } from './user_context';
 import axios from 'axios';
 
@@ -32,6 +32,7 @@ export const Profile = () => {
   ]);
   const [habitCount, setHabitCount] = useState(Math.floor(Math.random() * 15));
   const [streakCount, setStreakCount] = useState(Math.floor(Math.random() * 100));
+  const [refreshing, setRefreshing] = useState(false);
   // const [achieveCount, setAchieveCount] = useState(5);
 
   useEffect(() => {
@@ -46,8 +47,26 @@ export const Profile = () => {
     .catch((error) => console.log(error))
   })
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    axios.get(`https://final-api.onrender.com/users/${user_id}`)
+    .then(({ data }) => setUserData(data))
+    .catch((error) => console.log(error))
+    .finally(() => setRefreshing(false))
+
+    axios.get(`https://final-api.onrender.com/users/${user_id}/habits`)
+    .then(({ data }) => setHabitCount(data.length))
+    .catch((error) => console.log(error))
+
+  }, [user_id]);
+
+
   return (
     <View style={styles.container}>
+      <ScrollView refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Image
@@ -77,6 +96,7 @@ export const Profile = () => {
         </View>
         </View>
       </View>
+      </ScrollView>
       <ScrollView contentContainerStyle={styles.body}>
         {images.map((image, index) => (
           <View key={index} style={styles.imageContainer}>
