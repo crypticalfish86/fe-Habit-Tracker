@@ -11,7 +11,7 @@ export const Profile = () => {
     'https://www.bootdey.com/image/280x280/DC143C/000000',
     'https://www.bootdey.com/image/280x280/008B8B/000000'
   ]);
-  const [habitCount, setPostCount] = useState(10);
+  const [habitCount, setHabitCount] = useState(10);
   const [streakCount, setStreakCount] = useState(17);
   const [achieveCount, setAchieveCount] = useState(3);
   return (
@@ -55,6 +55,7 @@ export const Profile = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1
