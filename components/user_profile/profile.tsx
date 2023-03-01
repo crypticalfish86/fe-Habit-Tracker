@@ -1,8 +1,29 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { UserContext } from './user_context';
+import axios from 'axios';
 
+interface UserData {
+  name: string;
+  avatar_url: string,
+  description: string,
+  habitCount: number;
+  streakCount: number;
+  achievements: [];
+  images: string[];
+}
 
 export const Profile = () => {
+  const { user_id } = useContext(UserContext);
+  const [ user, setUserData ] = useState<UserData>({
+    name: '',
+    avatar_url: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp',
+    description: '',
+    habitCount: 0,
+    streakCount: 0,
+    achievements: [],
+    images: [],
+  }); 
   const [images, setImages] = useState([
     'https://www.bootdey.com/image/280x280/FF00FF/000000',
     'https://www.bootdey.com/image/280x280/00FFFF/000000',
@@ -13,16 +34,23 @@ export const Profile = () => {
   ]);
   const [habitCount, setHabitCount] = useState(10);
   const [streakCount, setStreakCount] = useState(17);
-  const [achieveCount, setAchieveCount] = useState(3);
+  // const [achieveCount, setAchieveCount] = useState(5);
+
+  useEffect(() => {
+    axios.get(`https://final-api.onrender.com/users/${user_id}`)
+    .then(({ data }) => setUserData(data))
+    .catch((error) => console.log(error));
+  }, [user_id]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Image
             style={styles.avatar}
-            source={{ uri: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp' }}
+            source={{ uri: user.avatar_url }}
           />
-          <Text style={styles.name}>Melissa Craw</Text>
+          <Text style={styles.name}>{user.name}</Text>
           <View style={styles.statsContainer}>
             <View style={styles.statsBox}>
               <Text style={styles.statsCount}>{habitCount}</Text>
@@ -33,14 +61,14 @@ export const Profile = () => {
               <Text style={styles.statsLabel}>Streak</Text>
             </View>
             <View style={styles.statsBox}>
-              <Text style={styles.statsCount}>{achieveCount}</Text>
-              <Text style={styles.statsLabel}>Prizes</Text>
+              <Text style={styles.statsCount}>{user.achievements.length}</Text>
+              <Text style={styles.statsLabel}>Badges</Text>
             </View>
           </View>
           <View style={styles.bio}>
           <View style={styles.infoContainer}>
             <Text style={styles.infoLabel}>Bio |</Text>
-            <Text style={styles.infoText}>ad Astra per Aspera</Text>
+            <Text style={styles.infoText}>{user.description}</Text>
         </View>
         </View>
         </View>

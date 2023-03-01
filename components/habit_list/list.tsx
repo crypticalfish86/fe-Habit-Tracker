@@ -34,20 +34,22 @@ export const List = ({navigation} :any, {route}: any) => {
 
   return (
     // need to workout how to give individual keys (user_id is duplicated and complains when we try to use index)
-    <View>
-        {userHabits.map((habit: Habits )=>(
-            <Card 
-            key={uuid()}
-            id={habit.id}
-            habit_name={habit.habit_name}
-            habit_category={habit.habit_category}
-            habit_type={habit.habit_type}
-            habit_streak={habit.habit_streak}
-            user_id={habit.user_id}
-            />      
-        ))}
-          <Button title='add habit' onPress={() => navigation.navigate('postHabit')}/>
-    </View>
+      <ScrollView>
+          <View>
+              {userHabits.map((habit: Habits) => (
+                  <Card
+                      key={uuid()}
+                      id={habit.id}
+                      habit_name={habit.habit_name}
+                      habit_category={habit.habit_category}
+                      habit_type={habit.habit_type}
+                      habit_streak={habit.habit_streak}
+                      user_id={habit.user_id}
+                  />
+              ))}
+              <Button title='add habit' onPress={() => navigation.navigate('postHabit')} />
+          </View>
+      </ScrollView>
 
 
 //     <View>
