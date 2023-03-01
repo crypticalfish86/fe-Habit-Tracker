@@ -69,11 +69,19 @@ export const RewardCard = ({
 
   const deleteReward = (event: any) => {
     event.preventDefault();
+      setUserRewards((prevRewards: Array<object>) => {
+        const filteredRewards: any = prevRewards.filter((reward: any) => {
+          if (            
+            reward.rewards_name === rewards_name &&
+            reward.rewards_description === rewards_description &&
+            reward.user_id === user_id) {
+            return true;
+          }
+        });
+        return filteredRewards;
+      });
     return fetch(`https://final-api.onrender.com/rewards/`)
       .then((response) => response.json())
-      .then((response) => {
-        return response;
-      })
       .then((rewards) => {
         const matchingReward = rewards.filter((reward: any) => {
           if (
@@ -85,6 +93,7 @@ export const RewardCard = ({
           }
         });
         const rewardToDelete = matchingReward[0];
+        console.log(rewardToDelete)
         return fetch(
           `https://final-api.onrender.com/rewards/${rewardToDelete.id}`,
           {
@@ -92,17 +101,9 @@ export const RewardCard = ({
           }
         );
       })
-      .then((rewardToDelete) => {
-        setUserRewards((prevRewards: Array<object>) => {
-          const filteredRewards: any = prevRewards.filter((reward: any) => {
-            if (reward !== rewardToDelete) {
-              return true;
-            }
-            return false;
-          });
-          return filteredRewards;
-        });
-      });
+      .catch((err) => {
+        console.log(err)
+      })
   };
 
   return (

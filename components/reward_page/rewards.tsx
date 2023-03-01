@@ -69,7 +69,6 @@ export const Rewards = () => {
       );
 
       const data = await response.json();
-      console.log(data);
       setUserRewards((currRewards) => {
         return [data, ...currRewards];
       });
