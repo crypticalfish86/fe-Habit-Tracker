@@ -37,6 +37,15 @@ export function Login() {
     setPassword(text);
   }
 
+  const handlePressOut = () => {
+    setUsername('');
+    setPassword('');
+    setSuccess(false);
+    setButt(false);
+    setUser('');
+    setUser_id(0);
+  }
+
   return (
     <View style={styles.container}>
       {butt && user ? (
@@ -59,6 +68,11 @@ export function Login() {
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+      {success && user && (
+        <TouchableOpacity style={styles.button2} onPress={handlePressOut}>
+        <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
+      )}
       {butt && success && (
         <Text style={styles.yMsg}>Login successful! user_id:{user_id}</Text>
       )}
@@ -94,6 +108,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
+  },
+  button2: {
+    backgroundColor: '#E30B5C',
+    borderRadius: 5,
+    paddingVertical: 10,
+    marginTop: 5,
+    paddingHorizontal: 14,
   },
   buttonText: {
     color: '#fff',

@@ -4,13 +4,13 @@ import { UserContext } from './user_context';
 import axios from 'axios';
 
 interface UserData {
-  name: string;
+  name: string,
   avatar_url: string,
   description: string,
-  habitCount: number;
-  streakCount: number;
-  achievements: [];
-  images: string[];
+  habitCount: number,
+  streakCount: number,
+  achievements: [],
+  images: string[],
 }
 
 export const Profile = () => {

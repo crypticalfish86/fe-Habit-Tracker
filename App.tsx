@@ -41,7 +41,7 @@ export default function App() {
           <Stack.Screen
             name="profile"
             component={Profile}
-            options={{ title: "user page" }}
+            options={{ title: "Personal" }}
           />
           <Stack.Screen
             name="cardEditor"
