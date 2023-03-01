@@ -1,18 +1,34 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faEraser,
+  faPen,
+  faCircleDollarToSlot,
+} from "@fortawesome/free-solid-svg-icons";
+import { UserRewards } from "./rewards";
 
 interface RewardCardProps {
   rewards_name: string;
   rewards_description: string;
   rewards_cost: number;
   user_id: number;
+  userRewards: UserRewards[];
+  setUserRewards: React.Dispatch<React.SetStateAction<UserRewards[]>>;
 }
 
-export const RewardCard = (props: RewardCardProps) => {
+export const RewardCard = ({
+  rewards_name,
+  rewards_description,
+  rewards_cost,
+  user_id,
+  userRewards,
+  setUserRewards,
+}: RewardCardProps) => {
   const [canBuyReward, setCanBuyReward] = useState(false);
   const [buttonPressed, setButtonPressed] = useState(false);
-  const { rewards_name, rewards_description, rewards_cost, user_id } = props;
+  // const { rewards_name, rewards_description, rewards_cost, user_id } = props;
 
   const buyReward = (event: any) => {
     setButtonPressed(true);
@@ -21,32 +37,28 @@ export const RewardCard = (props: RewardCardProps) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://final-api.onrender.com/users/${user_id}/currency`
+          `https://final-api.onrender.com/users/${user_id}`
         );
         const data = await response.json();
+        data.currency = parseInt(data.currency);
 
         if (data.currency < rewards_cost) {
           setCanBuyReward(false);
         } else if (data.currency > rewards_cost) {
           const newCurrency = data.currency - rewards_cost;
+          data.currency = newCurrency;
           const patchResponse = await fetch(
-            `https://final-api.onrender.com/users/${user_id}/currency`,
+            `https://final-api.onrender.com/users/${user_id}`,
             {
               method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({
-                newData: newCurrency,
-              }),
+              body: JSON.stringify(data),
             }
           );
 
-          const patchedData = await patchResponse.json();
-
           setCanBuyReward(true);
-          console.log(patchedData);
-          console.log(newCurrency);
         }
       } catch (error) {
         console.log("Error:", error);
@@ -55,21 +67,72 @@ export const RewardCard = (props: RewardCardProps) => {
     fetchData();
   };
 
+  const deleteReward = (event: any) => {
+    event.preventDefault();
+    return fetch(`https://final-api.onrender.com/rewards/`)
+      .then((response) => response.json())
+      .then((response) => {
+        return response;
+      })
+      .then((rewards) => {
+        const matchingReward = rewards.filter((reward: any) => {
+          if (
+            reward.rewards_name === rewards_name &&
+            reward.rewards_description === rewards_description &&
+            reward.user_id === user_id
+          ) {
+            return reward;
+          }
+        });
+        const rewardToDelete = matchingReward[0];
+        return fetch(
+          `https://final-api.onrender.com/rewards/${rewardToDelete.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+      })
+      .then((rewardToDelete) => {
+        setUserRewards((prevRewards: array) => {
+          const filteredRewards: any = prevRewards.filter((reward: any) => {
+            if (reward !== rewardToDelete) {
+              return filteredRewards;
+            }
+          });
+        });
+      });
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
         <Text>Reward: {rewards_name}</Text>
         <Text>Description: {rewards_description}</Text>
         <Text>Cost: {rewards_cost}</Text>
-        <Text>{user_id}</Text>
-        <Pressable
-          style={styles.button}
-          onPress={(event) => {
-            buyReward(event);
-          }}
-        >
-          <Text style={styles.buttontext}>Buy Reward</Text>
-        </Pressable>
+        <View style={styles.buttoncontainer}>
+          <Pressable
+            id="buy"
+            style={styles.button}
+            onPress={(event) => {
+              buyReward(event);
+            }}
+          >
+            <FontAwesomeIcon icon={faCircleDollarToSlot} size={20} />
+          </Pressable>
+          <Pressable id="patch" style={styles.button}>
+            <FontAwesomeIcon icon={faPen} size={20} />
+          </Pressable>
+          <Pressable
+            id="delete"
+            style={styles.button}
+            onPress={(event) => {
+              deleteReward(event);
+            }}
+          >
+            <FontAwesomeIcon icon={faEraser} size={20} />
+          </Pressable>
+        </View>
+
         {buttonPressed && canBuyReward === true && (
           <Text>You deserved this!</Text>
         )}
@@ -100,22 +163,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     marginVertical: 12,
   },
-  button: {
+  buttoncontainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
     alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 6,
-    elevation: 3,
-    backgroundColor: "black",
-    marginLeft: 60,
-    marginRight: 60,
+    gap: 5,
   },
-  buttontext: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "white",
+  button: {
+    marginHorizontal: 5,
   },
 });

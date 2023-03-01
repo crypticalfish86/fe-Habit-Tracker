@@ -19,3 +19,6 @@ faList;
 faGift;
 faFire;
 faMeteor;
+faEraser;
+faPen;
+faCircleDollarToSlot;

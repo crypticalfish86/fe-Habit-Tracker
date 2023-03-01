@@ -41,15 +41,14 @@ export default function TabNavBar() {
             iconName = focused ? faGift : faGift;
           }
 
-          return <FontAwesomeIcon icon={iconName} size={32} color={color} />;
+          return <FontAwesomeIcon icon={iconName} size={18} color={color} />;
         },
-      })}
-      screenOptions={{
+
         tabBarActiveTintColor: "tomato",
         tabBarInactiveTintColor: "grey",
         tabBarLabelStyle: { paddingBottom: 10, fontSize: 10 },
-        tabBarStyle: { padding: 10, height: 60 },
-      }}
+        tabBarStyle: { padding: 10, height: 80 },
+      })}
     >
       <Tab.Screen
         name={habitName}
