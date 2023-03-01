@@ -7,18 +7,28 @@ import {
   faPen,
   faCircleDollarToSlot,
 } from "@fortawesome/free-solid-svg-icons";
+import { UserRewards } from "./rewards";
 
 interface RewardCardProps {
   rewards_name: string;
   rewards_description: string;
   rewards_cost: number;
   user_id: number;
+  userRewards: UserRewards[];
+  setUserRewards: React.Dispatch<React.SetStateAction<UserRewards[]>>;
 }
 
-export const RewardCard = (props: RewardCardProps) => {
+export const RewardCard = ({
+  rewards_name,
+  rewards_description,
+  rewards_cost,
+  user_id,
+  userRewards,
+  setUserRewards,
+}: RewardCardProps) => {
   const [canBuyReward, setCanBuyReward] = useState(false);
   const [buttonPressed, setButtonPressed] = useState(false);
-  const { rewards_name, rewards_description, rewards_cost, user_id } = props;
+  // const { rewards_name, rewards_description, rewards_cost, user_id } = props;
 
   const buyReward = (event: any) => {
     setButtonPressed(true);
@@ -62,29 +72,34 @@ export const RewardCard = (props: RewardCardProps) => {
     return fetch(`https://final-api.onrender.com/rewards/`)
       .then((response) => response.json())
       .then((response) => {
-        console.log(response, "<--------RESPONSE");
         return response;
       })
       .then((rewards) => {
-        console.log(rewards);
         const matchingReward = rewards.filter((reward: any) => {
           if (
             reward.rewards_name === rewards_name &&
             reward.rewards_description === rewards_description &&
             reward.user_id === user_id
           ) {
-            console.log(reward);
             return reward;
           }
         });
         const rewardToDelete = matchingReward[0];
-        console.log(rewardToDelete);
         return fetch(
           `https://final-api.onrender.com/rewards/${rewardToDelete.id}`,
           {
             method: "DELETE",
           }
         );
+      })
+      .then((rewardToDelete) => {
+        setUserRewards((prevRewards: array) => {
+          const filteredRewards: any = prevRewards.filter((reward: any) => {
+            if (reward !== rewardToDelete) {
+              return filteredRewards;
+            }
+          });
+        });
       });
   };
 

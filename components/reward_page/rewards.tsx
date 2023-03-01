@@ -26,7 +26,7 @@ interface Body {
   user_id: number;
 }
 
-interface UserRewards {
+export interface UserRewards {
   rewards_name: string;
   rewards_description: string;
   rewards_cost: number;
@@ -111,6 +111,8 @@ export const Rewards = () => {
           rewards_description={reward.rewards_description}
           rewards_cost={reward.rewards_cost}
           user_id={reward.user_id}
+          userRewards={userRewards}
+          setUserRewards={setUserRewards}
         />
       ))}
     </View>
