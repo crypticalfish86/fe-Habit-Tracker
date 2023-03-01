@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useContext } from "react";
+import { UserContext } from "../user_profile/user_context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
@@ -7,6 +9,7 @@ import {
   faUser,
   faQuestion,
   faGear,
+  faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { List } from "../habit_list/list";
@@ -24,6 +27,7 @@ const loginName = "Login!";
 const Tab = createBottomTabNavigator();
 
 export default function TabNavBar() {
+  const { user } = useContext(UserContext);
   return (
     <Tab.Navigator
       initialRouteName={habitName}
@@ -77,7 +81,13 @@ export default function TabNavBar() {
       <Tab.Screen
         name={loginName}
         component={Login}
-        options={{ title: "Log in" }}
+        options={{
+          title: user ? user.split(" ")[0] : 'Log in',
+          tabBarIcon: ({ focused, color }) => {
+            let iconName = user? faRightFromBracket : faGear;
+            return <FontAwesomeIcon icon={iconName} size={18} color={color} />;
+          },
+        }}
       />
     </Tab.Navigator>
   );
