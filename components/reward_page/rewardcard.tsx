@@ -93,12 +93,14 @@ export const RewardCard = ({
         );
       })
       .then((rewardToDelete) => {
-        setUserRewards((prevRewards: array) => {
+        setUserRewards((prevRewards: Array<object>) => {
           const filteredRewards: any = prevRewards.filter((reward: any) => {
             if (reward !== rewardToDelete) {
-              return filteredRewards;
+              return true;
             }
+            return false;
           });
+          return filteredRewards;
         });
       });
   };
