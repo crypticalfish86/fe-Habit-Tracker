@@ -6,6 +6,7 @@ import {
   faList,
   faUser,
   faQuestion,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { List } from "../habit_list/list";
@@ -39,6 +40,8 @@ export default function TabNavBar() {
             iconName = focused ? faUser : faUser;
           } else if (rn === rewardName) {
             iconName = focused ? faGift : faGift;
+          } else if (rn === loginName) {
+            iconName = focused? faGear : faGear;
           }
 
           return <FontAwesomeIcon icon={iconName} size={18} color={color} />;
