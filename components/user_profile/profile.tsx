@@ -17,7 +17,7 @@ export const Profile = () => {
   const [ user, setUserData ] = useState<UserData>({
     name: '',
     avatar_url: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp',
-    description: '',
+    description: 'describe yourself in three words :)',
     streakCount: 0,
     achievements: [],
     images: [],
@@ -159,12 +159,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   imageContainer: {
-    width: '33%',
+    width: '25%',
     padding: 5,
   },
   image: {
     width: '100%',
-    height: 105,
+    height: 75,
   },
   infoContainer: {
     flexDirection: 'row',
