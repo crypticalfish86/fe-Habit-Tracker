@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import { Text, View, Button, ScrollView, StyleSheet } from 'react-native'
+import { Text, View, Button, ScrollView, StyleSheet, Pressable } from 'react-native'
 import axios, {AxiosResponse} from 'axios'
 import uuid from 'react-uuid'
 import {Card} from '../habit_card/card'
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 interface Habits {
     id: number,
@@ -34,22 +36,30 @@ export const List = ({navigation} :any, {route}: any) => {
 
   return (
     // need to workout how to give individual keys (user_id is duplicated and complains when we try to use index)
-      <ScrollView>
-          <View>
-              {userHabits.map((habit: Habits) => (
-                  <Card
-                      key={uuid()}
-                      id={habit.id}
-                      habit_name={habit.habit_name}
-                      habit_category={habit.habit_category}
-                      habit_type={habit.habit_type}
-                      habit_streak={habit.habit_streak}
-                      user_id={habit.user_id}
-                  />
-              ))}
-              <Button title='add habit' onPress={() => navigation.navigate('postHabit')} />
-          </View>
-      </ScrollView>
+    <ScrollView>
+        <View>
+        <Pressable onPress={() => navigation.navigate('postHabit')}>
+        <FontAwesomeIcon
+        icon={faPlus}
+        size={24}
+        style={styles.modalToggle}/>
+
+        </Pressable>
+        {userHabits.map((habit: Habits )=>(
+            <Card 
+            key={uuid()}
+            id={habit.id}
+            habit_name={habit.habit_name}
+            habit_category={habit.habit_category}
+            habit_type={habit.habit_type}
+            habit_streak={habit.habit_streak}
+            user_id={habit.user_id}
+            />      
+        ))}
+        </View>
+    </ScrollView>
+
+    
 
 
 //     <View>
@@ -58,3 +68,23 @@ export const List = ({navigation} :any, {route}: any) => {
 
   )
 }
+
+const styles = StyleSheet.create({
+    modalToggle: {
+      justifyContent: "center",
+      alignItems: "center",
+      marginBottom: 10,
+      borderWidth: 1,
+      borderColor: "#f2f2f2",
+      padding: 10,
+      borderRadius: 10,
+      alignSelf: "center",
+    },
+    modalClose: {
+      marginTop: 65,
+      marginBottom: 0,
+    },
+    modalContent: {
+      flex: 1,
+    },
+  });
