@@ -11,14 +11,14 @@ export default function AchieveCard({
 }: Achievements) {
   return (
     <View style={styles.card}>
-        <View style={styles.img_container}>
-          <Image style={styles.image} source={{uri : achievement_img_url}}/>
-        </View>
-        <View style={styles.cardContent}>
-          <Text>Name: {achievement_name}</Text>
-          <Text>Description: {achievement_description}</Text>
-          <Text>Reward: {achievement_reward}</Text>
-        </View>
+      <View style={styles.img_container}>
+        <Image style={styles.image} source={{ uri: achievement_img_url }} />
+      </View>
+      <View style={styles.cardContent}>
+        <Text>Name: {achievement_name}</Text>
+        <Text>Description: {achievement_description}</Text>
+        <Text>Reward: {achievement_reward}</Text>
+      </View>
     </View>
   );
 }
@@ -36,23 +36,26 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     marginLeft: 15,
     marginRight: 15,
+    height: 170,
   },
   cardContent: {
     marginHorizontal: 24,
     marginVertical: 12,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    marginLeft: 165,
+    marginTop: -115,
   },
   img_container: {
-      width: '60%',
-      padding: 5,
-      display: "flex",
-      flexDirection: "column"
+    width: "100%",
+    padding: 20,
+    display: "flex",
+    flexDirection: "row",
   },
   image: {
-    width: '10%',
-    height: '10%',
-    overflow: "hidden"
-    
-  }
+    width: "35%",
+    height: 110,
+    overflow: "hidden",
+    marginTop: 10,
+  },
 });
