@@ -7,7 +7,6 @@ interface UserData {
   name: string,
   avatar_url: string,
   description: string,
-  habitCount: number,
   streakCount: number,
   achievements: [],
   images: string[],
@@ -19,21 +18,20 @@ export const Profile = () => {
     name: '',
     avatar_url: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp',
     description: '',
-    habitCount: 0,
     streakCount: 0,
     achievements: [],
     images: [],
   }); 
   const [images, setImages] = useState([
-    'https://www.bootdey.com/image/280x280/FF00FF/000000',
-    'https://www.bootdey.com/image/280x280/00FFFF/000000',
-    'https://www.bootdey.com/image/280x280/FF7F50/000000',
-    'https://www.bootdey.com/image/280x280/6495ED/000000',
-    'https://www.bootdey.com/image/280x280/DC143C/000000',
-    'https://www.bootdey.com/image/280x280/008B8B/000000'
+    'https://cdn-icons-png.flaticon.com/512/2655/2655537.png',
+    'https://cdn-icons-png.flaticon.com/512/2655/2655542.png',
+    'https://cdn-icons-png.flaticon.com/512/2655/2655510.png',
+    'https://cdn-icons-png.flaticon.com/512/2655/2655504.png',
+    'https://cdn-icons-png.flaticon.com/512/2655/2655527.png',
+    'https://cdn-icons-png.flaticon.com/512/2655/2655516.png'
   ]);
-  const [habitCount, setHabitCount] = useState(10);
-  const [streakCount, setStreakCount] = useState(17);
+  const [habitCount, setHabitCount] = useState(Math.floor(Math.random() * 15));
+  const [streakCount, setStreakCount] = useState(Math.floor(Math.random() * 100));
   // const [achieveCount, setAchieveCount] = useState(5);
 
   useEffect(() => {
@@ -41,6 +39,12 @@ export const Profile = () => {
     .then(({ data }) => setUserData(data))
     .catch((error) => console.log(error));
   }, [user_id]);
+
+  useEffect(() => {
+    axios.get(`https://final-api.onrender.com/users/${user_id}/habits`)
+    .then(({ data }) => setHabitCount(data.length))
+    .catch((error) => console.log(error))
+  })
 
   return (
     <View style={styles.container}>
@@ -130,17 +134,17 @@ const styles = StyleSheet.create({
   },
   body: {
     alignItems: 'center',
-    padding: 30,
+    padding: 10,
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
   imageContainer: {
     width: '33%',
-    padding: 5
+    padding: 5,
   },
   image: {
     width: '100%',
-    height: 120
+    height: 105,
   },
   infoContainer: {
     flexDirection: 'row',
