@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Pressable, TextInput, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { faStoreAlt } from '@fortawesome/free-solid-svg-icons';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import { useNavigation } from '@react-navigation/native';
+// import { faStoreAlt } from '@fortawesome/free-solid-svg-icons';
 import axios, {AxiosResponse} from 'axios';
+import SelectDropdown from 'react-native-select-dropdown'
 
 interface UpdatedData {
   id: number;
@@ -18,6 +19,9 @@ interface UpdatedData {
 
 
 export const CardEditor = ({route}:any, {navigation} : any) => {
+
+  const habitCategory = ['Exercise', 'Food', 'Sleep']
+  const habitType = ['Daily', 'Weekly', 'Monthly']
 
   const {habit_name, habit_category, habit_type,id, habit_streak, user_id} = route.params
   const [name, setName] = useState(habit_name.habit_name)
@@ -59,20 +63,20 @@ export const CardEditor = ({route}:any, {navigation} : any) => {
   };
 
 
-  const handleDelete = () => {
+  // const handleDelete = () => {
     
-      axios.delete(`https://final-api.onrender.com/habits/${habitID}/`)
-      .then(response => {
-        console.log('Delete successful', response.data);
-        console.log(response.status)
-      })
-      .catch(error => {
-        console.log('Delete failed', error);
-      })
+  //     axios.delete(`https://final-api.onrender.com/habits/${habitID}/`)
+  //     .then(response => {
+  //       console.log('Delete successful', response.data);
+  //       console.log(response.status)
+  //     })
+  //     .catch(error => {
+  //       console.log('Delete failed', error);
+  //     })
      
 
     
-  }
+  // }
 
 
 
@@ -87,26 +91,60 @@ export const CardEditor = ({route}:any, {navigation} : any) => {
       style={{borderWidth: 2, borderColor: 'skyblue', margin:20}}
       onChangeText={(text) => setName(text)}
       />
-      <TextInput 
+      {/* <TextInput 
       placeholder='habit type'
       style={{borderWidth: 2, borderColor: 'skyblue', margin:20}}
       onChangeText={(text) => setType(text)}
+      /> */}
+         <SelectDropdown
+      data={habitType}
+      buttonStyle={styles.title}
+      defaultButtonText='Type'
+      onSelect={(selectedItem, index) => {
+        setType(selectedItem)
+      }}
       />
-      <TextInput 
+       <SelectDropdown
+      data={habitCategory}
+      buttonStyle={styles.title}
+      defaultButtonText='Category'
+      onSelect={(selectedItem, index) => {
+        setCategory(selectedItem)
+      }}
+      />
+      {/* <TextInput 
       placeholder='habit category'
-      style={{borderWidth: 2, borderColor: 'skyblue', margin:20}}
+      style={styles.title}
       onChangeText={(text) => setCategory(text)}
-      />
+      /> */}
       <Button title='update' onPress={() => {handleSubmit()}}/>
-      <Button title='DELETE' onPress={() => {handleDelete()}}/>
-      <Text> {habitID}</Text>
+     
+
+
+      {/* <Button title='DELETE' onPress={() => {handleDelete()}}/> */}
+      {/* <Text> {habitID}</Text>
       <Text> {name}</Text>
       <Text> {category}</Text>
       <Text> {type}</Text>
       <Text> {streak}</Text>
-      <Text> {userID}</Text>
+      <Text> {userID}</Text> */}
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  title: {
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 8,
+    marginHorizontal: 80,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 10,
+    elevation: 3,
+
+  }
+})
 
 export default CardEditor

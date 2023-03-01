@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react'
 import { Text, View, StyleSheet, Pressable, TextInput, Button } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown'
 
 interface PostData {
     habit_name: string,
@@ -12,6 +13,9 @@ interface PostData {
 
 
 export const PostHabit = () => {
+    const habitCategory = ['Exercise', 'Food', 'Sleep']
+    const habitType = ['Daily', 'Weekly', 'Monthly']
+    const habitUserId = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
     const [name, setName] = useState('')
     const [category, setCategory] = useState('')
     const [type, setType] = useState('')
@@ -49,25 +53,49 @@ export const PostHabit = () => {
       style={{borderWidth: 2, borderColor: 'skyblue', margin:20}}
       onChangeText={(text) => setName(text)}
       />
-      <TextInput 
-      placeholder='habit category'
-      style={{borderWidth: 2, borderColor: 'skyblue', margin:20}}
-      onChangeText={(text) => setCategory(text)}
+             <SelectDropdown
+      data={habitType}
+      buttonStyle={styles.title}
+      defaultButtonText='Type'
+      onSelect={(selectedItem, index) => {
+        setType(selectedItem)
+      }}
       />
-      <TextInput 
-      placeholder='habit type'
-      style={{borderWidth: 2, borderColor: 'skyblue', margin:20}}
-      onChangeText={(text) => setType(text)}
+       <SelectDropdown
+      data={habitCategory}
+      buttonStyle={styles.title}
+      defaultButtonText='Category'
+      onSelect={(selectedItem, index) => {
+        setCategory(selectedItem)
+      }}
       />
-      <TextInput 
-      placeholder='user ID'
-      style={{borderWidth: 2, borderColor: 'skyblue', margin:20}}
-      onChangeText={(text) => setUserID(+text)}
+       <SelectDropdown
+      data={habitUserId}
+      buttonStyle={styles.title}
+      defaultButtonText='UserID'
+      onSelect={(selectedItem, index) => {
+        setUserID(selectedItem)
+      }}
       />
       <Button title='Add' onPress={() => {handlePost()}}/>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+    title: {
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginVertical: 8,
+      marginHorizontal: 100,
+      paddingVertical: 12,
+      paddingHorizontal: 32,
+      borderRadius: 10,
+      elevation: 3,
+  
+    }
+  })
 
 export default PostHabit
 
