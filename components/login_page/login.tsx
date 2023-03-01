@@ -49,7 +49,7 @@ export function Login() {
   return (
     <View style={styles.container}>
       {butt && user ? (
-        <Text style={styles.title}>Welcome {user}!</Text>
+        <Text style={styles.title}>Welcome, {user.split(' ')[0]}!</Text>
       ) : (
         <Text style={styles.title}>Welcome</Text>
       )}
@@ -73,12 +73,14 @@ export function Login() {
         <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       )}
+      <View>
       {butt && success && (
         <Text style={styles.yMsg}>Login successful! user_id:{user_id}</Text>
       )}
       {butt && !success && user === '' && (
         <Text style={styles.nMsg}>Invalid username or password</Text>
       )}
+      </View>
     </View>
   );
 }
@@ -123,12 +125,14 @@ const styles = StyleSheet.create({
   },
   yMsg: {
     color: '#93C572',
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: 'bold',
+    marginTop: 20,
   },
   nMsg: {
     color: '#E3735E',
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: 'bold',
+    marginTop: 20,
   }
 });

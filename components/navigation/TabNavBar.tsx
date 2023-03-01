@@ -8,8 +8,8 @@ import {
   faList,
   faUser,
   faQuestion,
-  faGear,
   faRightFromBracket,
+  faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { List } from "../habit_list/list";
@@ -84,7 +84,7 @@ export default function TabNavBar() {
         options={{
           title: user ? user.split(" ")[0] : 'Log in',
           tabBarIcon: ({ focused, color }) => {
-            let iconName = user? faRightFromBracket : faGear;
+            let iconName = user? faRightFromBracket : faRightToBracket;
             return <FontAwesomeIcon icon={iconName} size={18} color={color} />;
           },
         }}
