@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { Achievements } from "./achievements";
 
 export default function AchieveCard({
@@ -11,12 +11,14 @@ export default function AchieveCard({
 }: Achievements) {
   return (
     <View style={styles.card}>
-      <View style={styles.cardContent}>
-        <Text>{achievement_img_url}</Text>
-        <Text>Name: {achievement_name}</Text>
-        <Text>Description: {achievement_description}</Text>
-        <Text>Reward: {achievement_reward}</Text>
-      </View>
+        <View style={styles.img_container}>
+          <Image style={styles.image} source={{uri : achievement_img_url}}/>
+        </View>
+        <View style={styles.cardContent}>
+          <Text>Name: {achievement_name}</Text>
+          <Text>Description: {achievement_description}</Text>
+          <Text>Reward: {achievement_reward}</Text>
+        </View>
     </View>
   );
 }
@@ -38,5 +40,19 @@ const styles = StyleSheet.create({
   cardContent: {
     marginHorizontal: 24,
     marginVertical: 12,
+    alignItems: "center",
+    justifyContent: "center"
   },
+  img_container: {
+      width: '60%',
+      padding: 5,
+      display: "flex",
+      flexDirection: "column"
+  },
+  image: {
+    width: '10%',
+    height: '10%',
+    overflow: "hidden"
+    
+  }
 });
