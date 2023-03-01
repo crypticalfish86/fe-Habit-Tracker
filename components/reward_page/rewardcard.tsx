@@ -16,6 +16,8 @@ interface RewardCardProps {
   user_id: number;
   userRewards: UserRewards[];
   setUserRewards: React.Dispatch<React.SetStateAction<UserRewards[]>>;
+  userCurrency: number;
+  setUserCurrency: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const RewardCard = ({
@@ -25,50 +27,65 @@ export const RewardCard = ({
   user_id,
   userRewards,
   setUserRewards,
+  userCurrency,
+  setUserCurrency,
 }: RewardCardProps) => {
   const [canBuyReward, setCanBuyReward] = useState(false);
   const [buttonPressed, setButtonPressed] = useState(false);
-  // const { rewards_name, rewards_description, rewards_cost, user_id } = props;
 
   const buyReward = (event: any) => {
     setButtonPressed(true);
     event.preventDefault();
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://final-api.onrender.com/users/${user_id}`
-        );
-        const data = await response.json();
-        data.currency = parseInt(data.currency);
-
-        if (data.currency < rewards_cost) {
-          setCanBuyReward(false);
-        } else if (data.currency > rewards_cost) {
-          const newCurrency = data.currency - rewards_cost;
-          data.currency = newCurrency;
-          const patchResponse = await fetch(
-            `https://final-api.onrender.com/users/${user_id}`,
-            {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            }
+    setUserCurrency((prevCurrency) => {
+      const newCurrency = prevCurrency - rewards_cost;
+      const fetchData = async () => {
+        try {
+          const response = await fetch(
+            `https://final-api.onrender.com/users/${user_id}/`
           );
+          const data = await response.json();
+          data.currency = parseInt(data.currency);
 
-          setCanBuyReward(true);
+          if (data.currency < rewards_cost) {
+            setCanBuyReward(false);
+          } else if (data.currency > rewards_cost) {
+            data.currency = newCurrency;
+            const patchResponse = await fetch(
+              `https://final-api.onrender.com/users/${user_id}/`,
+              {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              }
+            );
+
+            setCanBuyReward(true);
+          }
+        } catch (error) {
+          console.log("Error:", error);
         }
-      } catch (error) {
-        console.log("Error:", error);
-      }
-    };
-    fetchData();
+      };
+      fetchData();
+      return newCurrency;
+    });
   };
 
   const deleteReward = (event: any) => {
     event.preventDefault();
+
+    setUserRewards((prevRewards) => {
+      return prevRewards.filter((reward) => {
+        return !(
+          reward.rewards_name === rewards_name &&
+          reward.rewards_description === rewards_description &&
+          reward.user_id === user_id
+        );
+      });
+    });
+
     return fetch(`https://final-api.onrender.com/rewards/`)
       .then((response) => response.json())
       .then((response) => {
@@ -92,14 +109,16 @@ export const RewardCard = ({
           }
         );
       })
-      .then((rewardToDelete) => {
-        setUserRewards((prevRewards: array) => {
-          const filteredRewards: any = prevRewards.filter((reward: any) => {
-            if (reward !== rewardToDelete) {
-              return filteredRewards;
-            }
+      .catch((error) => {
+        console.log(error);
+        if (error) {
+          setUserRewards((prevRewards) => {
+            return [
+              ...prevRewards,
+              { rewards_name, rewards_description, rewards_cost, user_id },
+            ];
           });
-        });
+        }
       });
   };
 
