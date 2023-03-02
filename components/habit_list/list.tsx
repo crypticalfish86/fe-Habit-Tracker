@@ -33,7 +33,7 @@ export const List = ({ navigation }: any) => {
       .catch((error: any) => {
         console.log(error)
       })
-  }, [])
+  }, [user_id])
 
   return (
     <ScrollView>
