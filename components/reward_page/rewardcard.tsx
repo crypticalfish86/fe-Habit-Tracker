@@ -166,6 +166,7 @@ export const RewardCard = ({
 
 const styles = StyleSheet.create({
   card: {
+    width: 300,
     borderRadius: 6,
     elevation: 3,
     backgroundColor: "#fff",

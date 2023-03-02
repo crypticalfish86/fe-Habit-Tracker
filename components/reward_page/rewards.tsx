@@ -85,18 +85,19 @@ export const Rewards = () => {
   };
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={globalStyles.container}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <View style={styles.header}>
           {userCurrency ? (
-            <View>
-              <Text>Current Currency: {userCurrency}</Text>
+            <View style={styles.headerContent}>
+              <Text style={styles.infoCurrency}>Current Currency: {userCurrency}</Text>
             </View>
           ) : (
             <View>
               <Text>Loading...</Text>
             </View>
           )}
+          </View>
 
           <Modal visible={modalOpen} animationType="slide">
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -120,7 +121,7 @@ export const Rewards = () => {
               style={{ ...styles.modalToggle }}
             />
           </Pressable>
-
+      <ScrollView contentContainerStyle={styles.body}>
           {userRewards.map((reward: UserRewards, index: number) => (
             <RewardCard
               key={uuid()}
@@ -134,13 +135,31 @@ export const Rewards = () => {
               setUserCurrency={setUserCurrency}
             />
           ))}
-        </View>
       </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  header: {
+    backgroundColor: '#fff',
+    alignItems: 'flex-start',
+    padding: 20,
+  },
+  headerContent: {
+    alignItems: "flex-start"
+  },
+  body: {
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  infoCurrency: {
+    fontWeight: '800',
+  },
   modalToggle: {
     justifyContent: "center",
     alignItems: "center",
