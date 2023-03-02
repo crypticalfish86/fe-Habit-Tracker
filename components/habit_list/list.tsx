@@ -36,7 +36,7 @@ export const List = ({ navigation }: any) => {
   }, [user_id])
 
   return (
-    <ScrollView>
+    <ScrollView style={{flex: 1, backgroundColor: '#E8F8F5'}}>
       <View>
         <Pressable onPress={() => navigation.navigate('postHabit', {
           user_id: user_id,
