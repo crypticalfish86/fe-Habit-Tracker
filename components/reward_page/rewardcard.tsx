@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     width: 300,
     borderRadius: 6,
     elevation: 3,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFDD0",
     shadowOffset: { width: 1, height: 1 },
     shadowColor: "#333",
     shadowOpacity: 0.3,
@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
   },
   labels: {
     fontWeight: 'bold',
+    color: '#626567'
   },
   content: {
     fontWeight: '400',

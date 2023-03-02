@@ -115,7 +115,7 @@ export const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#D4E6F1',
+    backgroundColor: '#ECF8EF',
   },
   header: {
     backgroundColor: '#F5F5DC',

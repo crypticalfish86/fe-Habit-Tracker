@@ -30,7 +30,7 @@ export default function Achievements({ navigation }: any) {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#F5EEF8' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF3FD' }}>
       <ScrollView>
         <View>
           {allAchievements.map((achievement: Achievements, index: number) => (
