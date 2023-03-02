@@ -15,7 +15,7 @@ const SplashScreen = ({ navigation }: Props) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-            <Text style={styles.title}>Welcome to Habits</Text>
+            <Text style={styles.title}>Welcome to a-bit</Text>
             </View>
             <AnimatedLottieView style={styles.center}
             source={require('./logo.json')}
