@@ -8,12 +8,11 @@ import {
   faList,
   faUser,
   faStar,
-  faQuestion,
   faRightFromBracket,
   faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { List } from "../habit_list/list";
+import { Habits } from "../habits/habits";
 import { Rewards } from "../reward_page/rewards";
 import Achievements from "../achievements/achievements";
 import { Profile } from "../user_profile/profile";
@@ -60,8 +59,8 @@ export default function TabNavBar() {
     >
       <Tab.Screen
         name={habitName}
-        component={List}
-        initialParams={{user_id: 12}}
+        component={Habits}
+        initialParams={{ user_id: 12 }}
         options={{ title: "Your Habits" }}
       />
       <Tab.Screen
@@ -84,7 +83,7 @@ export default function TabNavBar() {
         name={loginName}
         component={Login}
         options={{
-          title: user ? user.split(" ")[0] : 'Log in',
+          title: user ? user.split(" ")[0] : "Log in",
           tabBarIcon: ({ focused, color }) => {
             let iconName = user ? faRightFromBracket : faRightToBracket;
             return <FontAwesomeIcon icon={iconName} size={18} color={color} />;

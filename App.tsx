@@ -2,26 +2,24 @@ import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login } from "./components/login_page/login";
-import { Card } from "./components/habit_card/card";
-import { CardEditor } from "./components/habit_card/cardEditor"
-import { List } from './components/habit_list/list'
+// import { Card } from "./components/habit_card/card";
+// import { CardEditor } from "./components/habit_card/cardEditor";
+// import { List } from "./components/habit_list/list";
 import TabNavBar from "./components/navigation/TabNavBar";
 import { Profile } from "./components/user_profile/profile";
-import PostHabit from "./components/habit_card/postHabit";
+// import PostHabit from "./components/habit_card/postHabit";
 import { UserProvider } from "./components/user_profile/user_context";
 
-interface UpdatedData {
-  id: number;
-  habit_name: string;
-  habit_category: string;
-  habit_type: string;
-  habit_streak: number;
-  user_id: number;
-}
+// interface UpdatedData {
+//   id: number;
+//   habit_name: string;
+//   habit_category: string;
+//   habit_type: string;
+//   habit_streak: number;
+//   user_id: number;
+// }
 
 export default function App() {
-
-
   const Stack = createNativeStackNavigator();
 
   return (
@@ -43,7 +41,7 @@ export default function App() {
             component={Profile}
             options={{ title: "Personal" }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="cardEditor"
             component={CardEditor}
             options={{ title: "Update" }}
@@ -52,18 +50,18 @@ export default function App() {
             name="card"
             component={Card}
             options={{ title: "card" }}
-          />
-          <Stack.Screen
+          /> */}
+          {/* <Stack.Screen
             name='list'
             component={List}
             initialParams={{user_id:12}}
             options={{ title: 'Habits' }}
-          />
-          <Stack.Screen
+          /> */}
+          {/* <Stack.Screen
             name='postHabit'
             component={PostHabit}
             options={{ title: 'Add a new habit' }}
-          />
+          /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
