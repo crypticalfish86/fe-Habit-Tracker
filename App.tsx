@@ -58,12 +58,13 @@ export default function App() {
             component={List}
             initialParams={{user_id:12}}
             options={{ title: 'Habits' }}
-          />
-          <Stack.Screen
+          /> 
+          {<Stack.Screen
             name='postHabit'
             component={PostHabit}
+            initialParams={{user_id:12}}
             options={{ title: 'Add a new habit' }}
-          />
+          /> }
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

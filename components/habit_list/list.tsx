@@ -21,10 +21,11 @@ interface HabitProps {
 }
 
 
-export const List = ({navigation} :any, props: HabitProps) => {
+export const List = ({navigation}: any) => {
     const route = useRoute()
-    const { user_id } = props;
-    console.log(user_id)
+    // const {user_id} = route.params as HabitProps
+    // console.log(route.params)
+    const user_id = 2
 
 
     const [userHabits, setUserHabits] = useState<Habits[]>([])

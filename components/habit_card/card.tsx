@@ -90,7 +90,7 @@ const handleCheck = ({habit_streak, id}:any, Body: Body) => {
                 <Text>Type: {habit_type}</Text>
                 <Text>Streak: {habit_streak}</Text>
                 <View style={styles.buttoncontainer}>
-                  {/* <Pressable
+                  <Pressable
                   id='edit'
                   style={styles.button}
                   onPress={() => navigation.navigate('cardEditor', {
@@ -103,7 +103,7 @@ const handleCheck = ({habit_streak, id}:any, Body: Body) => {
                   })}
                   >
                   <FontAwesomeIcon icon={faPen} size={20}/>  
-                  </Pressable> */}
+                  </Pressable>
                   <Pressable
                   id="delete"
                   style={styles.button}
@@ -113,15 +113,15 @@ const handleCheck = ({habit_streak, id}:any, Body: Body) => {
                   >
                     <FontAwesomeIcon icon={faEraser} size={20}/>
                   </Pressable>
-                  {/* <Pressable
+                  <Pressable
                   id='check'
                   style={styles.button}
                   onPress={() => {
-                    // handleCheck({id, habit_streak})
+                    handleCheck({id, habit_streak})
                   }}
                   >
                     <FontAwesomeIcon icon={faCheck} size={20}/>
-                  </Pressable> */}
+                  </Pressable>
 
                 </View>
             </View>
