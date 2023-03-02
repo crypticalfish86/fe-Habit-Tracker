@@ -61,6 +61,7 @@ export default function TabNavBar() {
       <Tab.Screen
         name={habitName}
         component={List}
+        initialParams={{user_id: 12}}
         options={{ title: "Your Habits" }}
       />
       <Tab.Screen
@@ -76,7 +77,7 @@ export default function TabNavBar() {
       <Tab.Screen
         name={rewardName}
         component={Rewards}
-        initialParams={{ user_id: 7 }}
+        initialParams={{ user_id: 12 }}
         options={{ title: "Your Rewards" }}
       />
       <Tab.Screen

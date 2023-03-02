@@ -56,6 +56,7 @@ export default function App() {
           <Stack.Screen
             name='list'
             component={List}
+            initialParams={{user_id:12}}
             options={{ title: 'Habits' }}
           />
           <Stack.Screen
