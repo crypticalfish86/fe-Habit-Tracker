@@ -5,6 +5,7 @@ import uuid from 'react-uuid'
 import {Card} from '../habit_card/card'
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {useRoute} from '@react-navigation/native'
 
 interface Habits {
     id: number,
@@ -15,20 +16,29 @@ interface Habits {
     user_id: number;
 }
 
+interface HabitProps {
+  user_id: number;
+}
 
-export const List = ({navigation} :any, {route}: any) => {
+
+export const List = ({navigation}: any) => {
+    const route = useRoute()
+    // const {user_id} = route.params as HabitProps
+    // console.log(route.params)
+    const user_id = 2
+
 
     const [userHabits, setUserHabits] = useState<Habits[]>([])
 
     useEffect(() => {
-        axios.get<Habits[]>('https://final-api.onrender.com/habits/')
+        axios.get<Habits[]>(`https://final-api.onrender.com/users/${user_id}/habits`)
         .then((response : AxiosResponse<Habits[]>) => {
             setUserHabits(response.data)
         })
         .catch((error :any) => {
             console.log(error)
         })   
-    }, )
+    }, [])
 
 
 
@@ -38,7 +48,12 @@ export const List = ({navigation} :any, {route}: any) => {
     // need to workout how to give individual keys (user_id is duplicated and complains when we try to use index)
     <ScrollView>
         <View>
-        <Pressable onPress={() => navigation.navigate('postHabit')}>
+        <Pressable onPress={() => navigation.navigate('postHabit', {
+          user_id : user_id,
+          setUserHabits: setUserHabits,
+          userHabits: userHabits
+
+        })}>
         <FontAwesomeIcon
         icon={faPlus}
         size={24}
@@ -53,18 +68,15 @@ export const List = ({navigation} :any, {route}: any) => {
             habit_category={habit.habit_category}
             habit_type={habit.habit_type}
             habit_streak={habit.habit_streak}
-            user_id={habit.user_id}
+            user_id={user_id}
+            userHabits = {userHabits}
+            setUserHabits = {setUserHabits}
             />      
         ))}
         </View>
     </ScrollView>
 
-    
-
-
-//     <View>
-//         {userHabits}
-//    </View>
+  
 
   )
 }

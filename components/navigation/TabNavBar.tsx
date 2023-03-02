@@ -18,6 +18,7 @@ import { Rewards } from "../reward_page/rewards";
 import Achievements from "../achievements/achievements";
 import { Profile } from "../user_profile/profile";
 import { Login } from "../login_page/login";
+import {PostHabit} from  '../habit_card/postHabit'
 
 const habitName = "Habits";
 const achieveName = "Achievements";
@@ -61,6 +62,7 @@ export default function TabNavBar() {
       <Tab.Screen
         name={habitName}
         component={List}
+        initialParams={{user_id: 9}}
         options={{ title: "Your Habits" }}
       />
       <Tab.Screen
