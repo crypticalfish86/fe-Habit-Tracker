@@ -125,9 +125,9 @@ export const RewardCard = ({
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
-        <Text>Reward: {rewards_name}</Text>
-        <Text>Description: {rewards_description}</Text>
-        <Text>Cost: {rewards_cost}</Text>
+        <Text style={styles.labels}>Reward: <Text style={styles.content}>{rewards_name}</Text></Text>
+        <Text style={styles.labels}>Description: <Text style={styles.content}>{rewards_description}</Text></Text>
+        <Text style={styles.labels}>Cost: <Text style={styles.content}>{rewards_cost}</Text></Text>
         <View style={styles.buttoncontainer}>
           <Pressable
             id="buy"
@@ -166,9 +166,10 @@ export const RewardCard = ({
 
 const styles = StyleSheet.create({
   card: {
+    width: 300,
     borderRadius: 6,
     elevation: 3,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFDD0",
     shadowOffset: { width: 1, height: 1 },
     shadowColor: "#333",
     shadowOpacity: 0.3,
@@ -192,4 +193,11 @@ const styles = StyleSheet.create({
   button: {
     marginHorizontal: 5,
   },
+  labels: {
+    fontWeight: 'bold',
+    color: '#626567'
+  },
+  content: {
+    fontWeight: '400',
+  }
 });

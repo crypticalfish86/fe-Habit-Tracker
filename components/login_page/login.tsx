@@ -3,30 +3,43 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from '../user_profile/user_context';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
+  enum LoginStatus {
+    Idle,
+    Pending,
+    Success,
+    Failure,
+  }
 
 export function Login() {
-  const { user, setUser, user_id, setUser_id } = useContext(UserContext);
+  const { user, setUser, setUser_id } = useContext(UserContext);
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ success, setSuccess ] = useState(false);
   const [ butt, setButt] = useState(false);
+  const [ loginStatus, setLoginStatus ] = useState(LoginStatus.Idle);
 
   const handlePress = () => {
+    setLoginStatus(LoginStatus.Pending);
     axios.get('https://final-api.onrender.com/users/')
     .then(({ data }) => {
       const foundUser = data.find((u: any) => u.username === username && u.password === password);
       if (foundUser) {
         setUser(foundUser.name);
         setUser_id(foundUser.id);
+        setLoginStatus(LoginStatus.Success);
         setSuccess(true);
       } else {
-        setUser('');
-        setUser_id(0);
-        setSuccess(false);
+        setTimeout(() => {
+          setLoginStatus(LoginStatus.Failure)
+          setUser('')
+          setUser_id(0)
+          setSuccess(false)
+        }, 1000);   
       }
     })
     .catch((error) => console.log(error));
     setButt(true);
+    setLoginStatus(LoginStatus.Pending);
   };
 
   const handleuChange = (text: string) => {
@@ -38,6 +51,7 @@ export function Login() {
   }
 
   const handlePressOut = () => {
+    setLoginStatus(LoginStatus.Idle);
     setUsername('');
     setPassword('');
     setSuccess(false);
@@ -65,19 +79,24 @@ export function Login() {
         onChangeText={handlepChange}
         secureTextEntry
       />
+      {(loginStatus === LoginStatus.Idle || loginStatus === LoginStatus.Pending || loginStatus === LoginStatus.Failure) && (
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      {success && user && (
+      )}
+      {loginStatus === LoginStatus.Success && (
         <TouchableOpacity style={styles.button2} onPress={handlePressOut}>
         <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       )}
       <View>
-      {butt && success && (
-        <Text style={styles.yMsg}>Login successful! user_id:{user_id}</Text>
+      {loginStatus === LoginStatus.Pending && (
+        <Text style={styles.lMsg}>Logging in...</Text>
       )}
-      {butt && !success && user === '' && (
+      {butt && success && (
+        <Text style={styles.yMsg}>Login successful!</Text>
+      )}
+      {butt && loginStatus === LoginStatus.Failure && (
         <Text style={styles.nMsg}>Invalid username or password</Text>
       )}
       </View>
@@ -90,29 +109,33 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFF0',
   },
   title: {
-    fontSize: 24,
+    fontSize: 50,
+    color: '#D7BDE2',
     fontWeight: 'bold',
     marginBottom: 20,
   },
   input: {
-    height: 40,
+    height: 50,
     width: '80%',
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
+    borderColor: '#D3D3D3',
+    color: '#979A9A',
   },
   button: {
-    backgroundColor: '#007aff',
+    backgroundColor: '#6495ED',
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
+    marginTop: 10,
   },
   button2: {
-    backgroundColor: '#E30B5C',
+    backgroundColor: '#F88379',
     borderRadius: 5,
     paddingVertical: 10,
     marginTop: 5,
@@ -131,6 +154,12 @@ const styles = StyleSheet.create({
   },
   nMsg: {
     color: '#E3735E',
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+  lMsg: {
+    color: '#B2BEB5',
     fontSize: 12,
     fontWeight: 'bold',
     marginTop: 20,

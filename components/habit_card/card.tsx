@@ -1,4 +1,4 @@
-import React , {useState} from "react"
+import React , {useContext, useState} from "react"
 import { Text, View, StyleSheet, Pressable, TouchableOpacity, TouchableHighlight } from "react-native"
 // import {NavigationContainer, StackActions} from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,6 +11,7 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import axios, {AxiosResponse} from 'axios'
+import { UserContext } from "../user_profile/user_context";
 
 
 
@@ -36,9 +37,6 @@ interface UpdatedData {
 
 
 
-
-
-
 export const Card = ( props: HabitCardProps) => {
 const {id, habit_name, habit_category, habit_type, habit_streak, user_id, userHabits, setUserHabits} = props
 const navigation = useNavigation()
@@ -46,6 +44,7 @@ const navigation = useNavigation()
 // const [singleCard, setSingleCard] = useState<UpdatedData[]>([])
 
 const handleDelete = () => {
+  const { user_id } = useContext(UserContext);
   setUserHabits((prevHabits: any) => {
     return prevHabits.filter((habit:any) => {
       return !(habit.id === id && habit.user_id === user_id && habit.habit_name === habit_name)
@@ -61,7 +60,6 @@ const handleDelete = () => {
    console.log('Delete failed', error);
  })
 }
-
 
 
 

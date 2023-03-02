@@ -8,6 +8,7 @@ interface UserData {
   avatar_url: string,
   description: string,
   streakCount: number,
+  habitCount: number,
   achievements: [],
   images: string[],
 }
@@ -17,7 +18,8 @@ export const Profile = () => {
   const [ user, setUserData ] = useState<UserData>({
     name: '',
     avatar_url: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp',
-    description: '',
+    description: 'describe yourself in three words :)',
+    habitCount: 0,
     streakCount: 0,
     achievements: [],
     images: [],
@@ -28,12 +30,11 @@ export const Profile = () => {
     'https://cdn-icons-png.flaticon.com/512/2655/2655510.png',
     'https://cdn-icons-png.flaticon.com/512/2655/2655504.png',
     'https://cdn-icons-png.flaticon.com/512/2655/2655527.png',
-    'https://cdn-icons-png.flaticon.com/512/2655/2655516.png'
+    'https://cdn-icons-png.flaticon.com/512/7005/7005093.png'
   ]);
   const [habitCount, setHabitCount] = useState(Math.floor(Math.random() * 15));
   const [streakCount, setStreakCount] = useState(Math.floor(Math.random() * 100));
   const [refreshing, setRefreshing] = useState(false);
-  // const [achieveCount, setAchieveCount] = useState(5);
 
   useEffect(() => {
     axios.get(`https://final-api.onrender.com/users/${user_id}`)
@@ -42,9 +43,11 @@ export const Profile = () => {
   }, [user_id]);
 
   useEffect(() => {
-    axios.get(`https://final-api.onrender.com/users/${user_id}/habits`)
-    .then(({ data }) => setHabitCount(data.length))
-    .catch((error) => console.log(error))
+    if (user_id) {
+      axios.get(`https://final-api.onrender.com/users/${user_id}/habits`)
+      .then(({ data }) => setHabitCount(data.length))
+      .catch((error) => console.log(error))
+    }
   })
 
   const onRefresh = useCallback(() => {
@@ -110,13 +113,19 @@ export const Profile = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#ECF8EF',
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5DC',
     alignItems: 'center',
     padding: 30,
-    marginTop: 20
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    borderWidth: 2,
+    borderRadius: 20,
+    borderColor: '#EADDCA',
   },
   headerContent: {
     alignItems: 'center'
@@ -131,8 +140,8 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 22,
-    color: '#000000',
-    fontWeight: '600'
+    color: '#40826D',
+    fontWeight: '700'
   },
   statsContainer: {
     alignItems: 'center',
@@ -145,11 +154,11 @@ const styles = StyleSheet.create({
   },
   statsCount: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#000000'
+    fontWeight: '700',
+    color: '#34495E'
   },
   statsLabel: {
-    fontSize: 14,
+    fontSize: 11,
     color: '#999999'
   },
   body: {
@@ -159,12 +168,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   imageContainer: {
-    width: '33%',
+    width: '25%',
     padding: 5,
   },
   image: {
     width: '100%',
-    height: 105,
+    height: 75,
   },
   infoContainer: {
     flexDirection: 'row',
@@ -174,11 +183,13 @@ const styles = StyleSheet.create({
   infoLabel: {
     fontSize: 16,
     fontWeight: '800',
-    color: '#666666',
+    color: '#2471A3',
     marginRight: 8,
   },
   infoText: {
-    fontSize: 16,
+    fontWeight: '600',
+    fontSize: 14,
+    color: '#C39BD3',
   },
   bio: {
     alignItems: 'center',

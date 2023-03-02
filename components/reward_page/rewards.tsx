@@ -12,25 +12,25 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../user_profile/user_context";
 import { RewardCard } from "./rewardcard";
 import uuid from "react-uuid";
-import { useRoute } from "@react-navigation/native";
 import { RewardForm } from "./rewardform";
 import { globalStyles } from "../../styles/styles";
 
 interface RewardsProps {
-  user_id: number;
+  user_id: number; // get user_id - this time from UserContext
 }
 
-interface Body {
+interface Body { // from post request
   rewards_name: string;
   rewards_description: string;
   rewards_cost: string;
   user_id: number;
 }
 
-export interface UserRewards {
+export interface UserRewards { // from get request
   rewards_name: string;
   rewards_description: string;
   rewards_cost: number;
@@ -38,9 +38,8 @@ export interface UserRewards {
 }
 
 export const Rewards = () => {
-  const route = useRoute();
   const [modalOpen, setModalOpen] = useState(false);
-  const { user_id } = route.params as RewardsProps;
+  const { user_id } = useContext(UserContext);
   const [userRewards, setUserRewards] = useState<UserRewards[]>([]);
   const [userCurrency, setUserCurrency] = useState<number>(0);
 
@@ -86,18 +85,19 @@ export const Rewards = () => {
   };
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={globalStyles.container}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#E8F8F5'}}>
+      <View style={styles.container}>
+        <View style={styles.header}>
           {userCurrency ? (
-            <View>
-              <Text>Current Currency: {userCurrency}</Text>
+            <View style={styles.headerContent}>
+              <Text style={styles.infoCurrency}>Current Currency: {userCurrency}</Text>
             </View>
           ) : (
             <View>
               <Text>Loading...</Text>
             </View>
           )}
+          </View>
 
           <Modal visible={modalOpen} animationType="slide">
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -121,7 +121,7 @@ export const Rewards = () => {
               style={{ ...styles.modalToggle }}
             />
           </Pressable>
-
+      <ScrollView contentContainerStyle={styles.body}>
           {userRewards.map((reward: UserRewards, index: number) => (
             <RewardCard
               key={uuid()}
@@ -135,13 +135,33 @@ export const Rewards = () => {
               setUserCurrency={setUserCurrency}
             />
           ))}
-        </View>
       </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#E8F8F5',
+  },
+  header: {
+    backgroundColor: '#E8F8F5',
+    alignItems: 'flex-start',
+    padding: 20,
+  },
+  headerContent: {
+    alignItems: "flex-start",
+  },
+  body: {
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  infoCurrency: {
+    fontWeight: '800',
+    color: '#16A085',
+  },
   modalToggle: {
     justifyContent: "center",
     alignItems: "center",

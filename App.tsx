@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login } from "./components/login_page/login";
-import { Card } from "./components/habit_card/card";
-import { CardEditor } from "./components/habit_card/cardEditor"
+import SplashScreen from "./components/login_page/splashscreen";
 import { List } from './components/habit_list/list'
 import TabNavBar from "./components/navigation/TabNavBar";
 import { Profile } from "./components/user_profile/profile";
@@ -27,7 +26,15 @@ export default function App() {
   return (
     <UserProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+         initialRouteName="Splash"
+         screenOptions={{
+          headerShown: false
+         }}>
+          <Stack.Screen
+          name ="Splash"
+          component={SplashScreen}
+          />
           <Stack.Screen
             name="TabNavBar"
             component={TabNavBar}
@@ -44,25 +51,13 @@ export default function App() {
             options={{ title: "Personal" }}
           />
           <Stack.Screen
-            name="cardEditor"
-            component={CardEditor}
-            options={{ title: "Update" }}
-          />
-          <Stack.Screen
-            name="card"
-            component={Card}
-            options={{ title: "card" }}
-          />
-          <Stack.Screen
             name='list'
             component={List}
-            initialParams={{user_id:12}}
             options={{ title: 'Habits' }}
           /> 
           {<Stack.Screen
             name='postHabit'
             component={PostHabit}
-            initialParams={{user_id:12}}
             options={{ title: 'Add a new habit' }}
           /> }
         </Stack.Navigator>

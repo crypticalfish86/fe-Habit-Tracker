@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Pressable, TextInput, Button } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { useNavigation } from '@react-navigation/native';
-// import { faStoreAlt } from '@fortawesome/free-solid-svg-icons';
-import axios, {AxiosResponse} from 'axios';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, StyleSheet, TextInput, Button } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown'
+import { UserContext } from '../user_profile/user_context';
+import axios, {AxiosResponse} from 'axios';
+
+
 
 interface UpdatedData {
   id: number;
@@ -17,13 +16,13 @@ interface UpdatedData {
 }
 
 
-
 export const CardEditor = ({route}:any, {navigation} : any) => {
 
   const habitCategory = ['Exercise', 'Food', 'Sleep']
   const habitType = ['Daily', 'Weekly', 'Monthly']
 
-  const {habit_name, habit_category, habit_type,id, habit_streak, user_id} = route.params
+  const { user_id } = useContext(UserContext);
+  const {habit_name, habit_category, habit_type,id, habit_streak} = route.params
   const [name, setName] = useState(habit_name.habit_name)
   const [category, setCategory] = useState(habit_category.habit_category)
   const [type, setType] = useState(habit_type.habit_type)
@@ -31,17 +30,11 @@ export const CardEditor = ({route}:any, {navigation} : any) => {
   const habitStreak = +JSON.stringify(habit_streak.habit_streak)
   const [streak, setStreak] = useState(habitStreak)
 
-  const habitUserID = +JSON.stringify(user_id.user_id)
-  const [userID, setUserID] = useState(habitUserID)
-
   const habitid2 = +JSON.stringify(id.id)
   const [habitID, setHabitID] = useState(habitid2)
 
-  const [remove, setRemove] = useState(false)
 
-  const [data, setData] = useState<UpdatedData>({id: habitID, habit_name: name, habit_category : category, habit_type: type, habit_streak: streak, user_id: userID})
-  
-  
+  const [data, setData] = useState<UpdatedData>({id: habitID, habit_name: name, habit_category : category, habit_type: type, habit_streak: streak, user_id: user_id})
 
 
 
@@ -59,7 +52,7 @@ export const CardEditor = ({route}:any, {navigation} : any) => {
   
   const handleSubmit = () => {
   
-    setData({ id: habitID, habit_name: name, habit_category: category, habit_type: type, habit_streak: streak, user_id: userID });
+    setData({ id: habitID, habit_name: name, habit_category: category, habit_type: type, habit_streak: streak, user_id: user_id });
   };
 
 
@@ -74,15 +67,7 @@ export const CardEditor = ({route}:any, {navigation} : any) => {
   //       console.log('Delete failed', error);
   //     })
      
-
-    
   // }
-
-
-
-
-
-
 
   return (
     <View style={{margin: 20, marginTop: 100}}>
