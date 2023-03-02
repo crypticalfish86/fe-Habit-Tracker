@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "35%",
-    height: 110,
+    height: 100,
     overflow: "hidden",
     marginTop: 10,
   },
