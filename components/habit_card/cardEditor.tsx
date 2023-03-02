@@ -3,6 +3,7 @@ import { View, StyleSheet, TextInput, Button } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown'
 import { UserContext } from '../user_profile/user_context';
 import axios, {AxiosResponse} from 'axios';
+import {Habits} from '../habit_list/list'
 
 
 
@@ -14,6 +15,16 @@ interface UpdatedData {
   habit_streak: number;
   user_id: number;
 }
+interface HabitCardProps {
+  id: number;
+  habit_name: string;
+  habit_category: string;
+  habit_type: string;
+  habit_streak: number;
+  user_id: number;
+  userHabits: Habits[];
+  setUserHabits: React.Dispatch<React.SetStateAction<Habits[]>>
+}
 
 
 export const CardEditor = ({route}:any, {navigation} : any) => {
@@ -22,7 +33,7 @@ export const CardEditor = ({route}:any, {navigation} : any) => {
   const habitType = ['Daily', 'Weekly', 'Monthly']
 
   const { user_id } = useContext(UserContext);
-  const {habit_name, habit_category, habit_type,id, habit_streak} = route.params
+  const {habit_name, habit_category, habit_type,id, habit_streak, userHabits, setUserHabits} = route.params
   const [name, setName] = useState(habit_name.habit_name)
   const [category, setCategory] = useState(habit_category.habit_category)
   const [type, setType] = useState(habit_type.habit_type)
@@ -39,6 +50,8 @@ export const CardEditor = ({route}:any, {navigation} : any) => {
 
 
   useEffect(() => {
+    
+   
     axios.patch<UpdatedData>(`https://final-api.onrender.com/habits/${habitID}/`, data)
       .then((response: AxiosResponse<UpdatedData>) => {
         console.log('Update successful', response.data);
@@ -51,23 +64,18 @@ export const CardEditor = ({route}:any, {navigation} : any) => {
   }, [data]);
   
   const handleSubmit = () => {
-  
+    
+    // setUserHabits((currHabits:any) => {
+    //   return currHabits.map((habit:any) => {
+    //     if (habit.id === habitID){
+           
+    //     }
+    //   })
+    // })
+
     setData({ id: habitID, habit_name: name, habit_category: category, habit_type: type, habit_streak: streak, user_id: user_id });
   };
 
-
-  // const handleDelete = () => {
-    
-  //     axios.delete(`https://final-api.onrender.com/habits/${habitID}/`)
-  //     .then(response => {
-  //       console.log('Delete successful', response.data);
-  //       console.log(response.status)
-  //     })
-  //     .catch(error => {
-  //       console.log('Delete failed', error);
-  //     })
-     
-  // }
 
   return (
     <View style={{margin: 20, marginTop: 100}}>

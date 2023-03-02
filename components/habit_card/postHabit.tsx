@@ -56,7 +56,7 @@ export const PostHabit = () => {
   }
 
   return (
-    <View>
+    <View style={styles.top}>
       <TextInput
         placeholder='habit name'
         style={{ borderWidth: 2, borderColor: 'skyblue', margin: 20 }}
@@ -95,6 +95,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 3,
 
+  },
+  top: {
+    marginTop: 120
   }
 })
 
