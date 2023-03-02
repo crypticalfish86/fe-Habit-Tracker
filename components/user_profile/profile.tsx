@@ -87,7 +87,7 @@ export const Profile = () => {
               <Text style={styles.statsLabel}>Streak</Text>
             </View>
             <View style={styles.statsBox}>
-              <Text style={styles.statsCount}>{user.achievements.length}</Text>
+              <Text style={styles.statsCount}>6</Text>
               <Text style={styles.statsLabel}>Badges</Text>
             </View>
           </View>
