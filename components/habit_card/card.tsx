@@ -1,8 +1,7 @@
-import React from "react"
+import React , {useContext, useState} from "react"
 import { Text, View, StyleSheet, Pressable, TouchableOpacity, TouchableHighlight } from "react-native"
-import { useState } from "react"
-import {NavigationContainer, StackActions} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import {NavigationContainer, StackActions} from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
@@ -12,6 +11,7 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import axios, {AxiosResponse} from 'axios'
+import { UserContext } from "../user_profile/user_context";
 
 
 
@@ -22,6 +22,8 @@ interface HabitCardProps {
     habit_type: string;
     habit_streak: number;
     user_id: number;
+    userHabits: any;
+    setUserHabits: any;
 }
 
 interface UpdatedData {
@@ -35,20 +37,34 @@ interface UpdatedData {
 
 
 
+export const Card = ( props: HabitCardProps) => {
+const {id, habit_name, habit_category, habit_type, habit_streak, user_id, userHabits, setUserHabits} = props
+const navigation = useNavigation()
 
-const handleDelete = ({id}:any) => {
-  axios.delete(`https://final-api.onrender.com/habits/${id}/`)
-  .then(response => {
-    console.log('Delete successful', response.data);
-    console.log(response.status)
-  })
-  .catch(error => {
-    console.log('Delete failed', error);
-  })
+// const [singleCard, setSingleCard] = useState<UpdatedData[]>([])
+
+const handleDelete = () => {
+  const { user_id } = useContext(UserContext);
+  setUserHabits((prevHabits: any) => {
+    return prevHabits.filter((habit:any) => {
+      return !(habit.id === id && habit.user_id === user_id && habit.habit_name === habit_name)
+    })
+ })
+
+ return axios.delete(`https://final-api.onrender.com/habits/${id}/`)
+ .then(response => {
+   console.log('Delete successful', response.data);
+   console.log(response.status)
+ })
+ .catch(error => {
+   console.log('Delete failed', error);
+ })
 }
 
-const handleCheck = ({habit_streak, id}:any) => {
-  console.log(id)
+
+
+const handleCheck = ({habit_streak, id}:any, Body: Body) => {
+  console.log(JSON.stringify(Body))
   axios.patch<UpdatedData>(`https://final-api.onrender.com/habits/${id}/`, {
     habit_streak :(habit_streak) + 1
   })
@@ -62,10 +78,8 @@ const handleCheck = ({habit_streak, id}:any) => {
       });
 }
 
-export const Card = ( props: HabitCardProps) =>
-{
-const {id, habit_name, habit_category, habit_type, habit_streak, user_id} = props
-const navigation = useNavigation()
+
+
     return(
         <View style={styles.card}>
             <View style={styles.cardContent}>
@@ -77,23 +91,22 @@ const navigation = useNavigation()
                   <Pressable
                   id='edit'
                   style={styles.button}
-                  onPress={() => navigation.navigate('cardEditor', 
-                  // {
-                  //   id: {id},
-                  //   habit_name: {habit_name},
-                  //   habit_category: {habit_category},
-                  //   habit_streak: {habit_streak},
-                  //   habit_type: {habit_type},
-                  //   user_id : {user_id}}
-                    )}
+                  onPress={() => navigation.navigate('cardEditor', {
+                    id: {id},
+                    habit_name: {habit_name},
+                    habit_category: {habit_category},
+                    habit_streak: {habit_streak},
+                    habit_type: {habit_type},
+                    user_id : {user_id}
+                  })}
                   >
                   <FontAwesomeIcon icon={faPen} size={20}/>  
                   </Pressable>
                   <Pressable
-                  id='delete'
+                  id="delete"
                   style={styles.button}
                   onPress={() => {
-                    handleDelete({id})
+                    handleDelete()
                   }}
                   >
                     <FontAwesomeIcon icon={faEraser} size={20}/>

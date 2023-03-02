@@ -3,8 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login } from "./components/login_page/login";
 import SplashScreen from "./components/login_page/splashscreen";
-import { Card } from "./components/habit_card/card";
-import { CardEditor } from "./components/habit_card/cardEditor"
 import { List } from './components/habit_list/list'
 import TabNavBar from "./components/navigation/TabNavBar";
 import { Profile } from "./components/user_profile/profile";
@@ -56,7 +54,12 @@ export default function App() {
             name='list'
             component={List}
             options={{ title: 'Habits' }}
-          />
+          /> 
+          {<Stack.Screen
+            name='postHabit'
+            component={PostHabit}
+            options={{ title: 'Add a new habit' }}
+          /> }
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

@@ -35,7 +35,6 @@ export const Profile = () => {
   const [habitCount, setHabitCount] = useState(Math.floor(Math.random() * 15));
   const [streakCount, setStreakCount] = useState(Math.floor(Math.random() * 100));
   const [refreshing, setRefreshing] = useState(false);
-  // const [achieveCount, setAchieveCount] = useState(5);
 
   useEffect(() => {
     axios.get(`https://final-api.onrender.com/users/${user_id}`)
