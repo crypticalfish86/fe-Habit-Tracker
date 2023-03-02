@@ -8,6 +8,7 @@ import TabNavBar from "./components/navigation/TabNavBar";
 import { Profile } from "./components/user_profile/profile";
 import PostHabit from "./components/habit_card/postHabit";
 import { UserProvider } from "./components/user_profile/user_context";
+import CardEditor from "./components/habit_card/cardEditor";
 
 interface UpdatedData {
   id: number;
@@ -55,11 +56,16 @@ export default function App() {
             component={List}
             options={{ title: 'Habits' }}
           /> 
-          {<Stack.Screen
+          <Stack.Screen
             name='postHabit'
             component={PostHabit}
             options={{ title: 'Add a new habit' }}
-          /> }
+          /> 
+          <Stack.Screen
+            name='cardEditor'
+            component={CardEditor}
+            options={{ title: 'Update your habit' }}
+          /> 
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

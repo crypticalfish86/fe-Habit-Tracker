@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios, {AxiosResponse} from 'axios'
 import { UserContext } from "../user_profile/user_context";
+import {Habits} from '../habit_list/list'
 
 
 
@@ -22,8 +23,8 @@ interface HabitCardProps {
     habit_type: string;
     habit_streak: number;
     user_id: number;
-    userHabits: any;
-    setUserHabits: any;
+    userHabits: Habits[];
+    setUserHabits: React.Dispatch<React.SetStateAction<Habits[]>>
 }
 
 interface UpdatedData {
@@ -37,14 +38,17 @@ interface UpdatedData {
 
 
 
+
+
 export const Card = ( props: HabitCardProps) => {
-const {id, habit_name, habit_category, habit_type, habit_streak, user_id, userHabits, setUserHabits} = props
+const {id, habit_name, habit_category, habit_type, habit_streak, userHabits, setUserHabits} = props
 const navigation = useNavigation()
+const { user_id } = useContext(UserContext);
 
 // const [singleCard, setSingleCard] = useState<UpdatedData[]>([])
 
 const handleDelete = () => {
-  const { user_id } = useContext(UserContext);
+
   setUserHabits((prevHabits: any) => {
     return prevHabits.filter((habit:any) => {
       return !(habit.id === id && habit.user_id === user_id && habit.habit_name === habit_name)

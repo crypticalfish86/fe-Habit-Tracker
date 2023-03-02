@@ -7,7 +7,7 @@ import { Card } from '../habit_card/card'
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-interface Habits {
+export interface Habits {
   id: number,
   habit_name: string,
   habit_category: string,
