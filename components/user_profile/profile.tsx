@@ -114,13 +114,19 @@ export const Profile = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#D4E6F1',
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5DC',
     alignItems: 'center',
     padding: 30,
-    marginTop: 20
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    borderWidth: 2,
+    borderRadius: 20,
+    borderColor: '#EADDCA',
   },
   headerContent: {
     alignItems: 'center'
@@ -135,8 +141,8 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 22,
-    color: '#000000',
-    fontWeight: '600'
+    color: '#40826D',
+    fontWeight: '700'
   },
   statsContainer: {
     alignItems: 'center',
@@ -149,11 +155,11 @@ const styles = StyleSheet.create({
   },
   statsCount: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#000000'
+    fontWeight: '700',
+    color: '#34495E'
   },
   statsLabel: {
-    fontSize: 14,
+    fontSize: 11,
     color: '#999999'
   },
   body: {
@@ -163,12 +169,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   imageContainer: {
-    width: '33%',
+    width: '25%',
     padding: 5,
   },
   image: {
     width: '100%',
-    height: 100,
+    height: 75,
   },
   infoContainer: {
     flexDirection: 'row',
@@ -178,11 +184,13 @@ const styles = StyleSheet.create({
   infoLabel: {
     fontSize: 16,
     fontWeight: '800',
-    color: '#666666',
+    color: '#2471A3',
     marginRight: 8,
   },
   infoText: {
-    fontSize: 16,
+    fontWeight: '600',
+    fontSize: 14,
+    color: '#C39BD3',
   },
   bio: {
     alignItems: 'center',

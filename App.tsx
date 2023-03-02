@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login } from "./components/login_page/login";
+import SplashScreen from "./components/login_page/splashscreen";
 import { Card } from "./components/habit_card/card";
 import { CardEditor } from "./components/habit_card/cardEditor"
 import { List } from './components/habit_list/list'
@@ -27,7 +28,15 @@ export default function App() {
   return (
     <UserProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+         initialRouteName="Splash"
+         screenOptions={{
+          headerShown: false
+         }}>
+          <Stack.Screen
+          name ="Splash"
+          component={SplashScreen}
+          />
           <Stack.Screen
             name="TabNavBar"
             component={TabNavBar}

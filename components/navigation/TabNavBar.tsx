@@ -8,7 +8,6 @@ import {
   faList,
   faUser,
   faStar,
-  faQuestion,
   faRightFromBracket,
   faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
@@ -31,7 +30,7 @@ export default function TabNavBar() {
   const { user } = useContext(UserContext);
   return (
     <Tab.Navigator
-      initialRouteName={habitName}
+      initialRouteName={loginName}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -71,7 +70,7 @@ export default function TabNavBar() {
       <Tab.Screen
         name={profileName}
         component={Profile}
-        options={{ title: "User Profile" }}
+        options={{ title: `Home Page` }}
       />
       <Tab.Screen
         name={rewardName}
@@ -82,6 +81,7 @@ export default function TabNavBar() {
         name={loginName}
         component={Login}
         options={{
+          headerShown: false,
           title: user ? user.split(" ")[0] : 'Log in',
           tabBarIcon: ({ focused, color }) => {
             let iconName = user ? faRightFromBracket : faRightToBracket;

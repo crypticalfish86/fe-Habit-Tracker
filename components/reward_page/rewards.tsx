@@ -85,7 +85,7 @@ export const Rewards = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#E8F8F5'}}>
       <View style={styles.container}>
         <View style={styles.header}>
           {userCurrency ? (
@@ -143,15 +143,16 @@ export const Rewards = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#E8F8F5',
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: '#E8F8F5',
     alignItems: 'flex-start',
     padding: 20,
   },
   headerContent: {
-    alignItems: "flex-start"
+    alignItems: "flex-start",
   },
   body: {
     alignItems: 'center',
@@ -159,6 +160,7 @@ const styles = StyleSheet.create({
   },
   infoCurrency: {
     fontWeight: '800',
+    color: '#16A085',
   },
   modalToggle: {
     justifyContent: "center",
