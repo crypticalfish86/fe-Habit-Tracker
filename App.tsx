@@ -44,24 +44,9 @@ export default function App() {
             options={{ title: "Personal" }}
           />
           <Stack.Screen
-            name="cardEditor"
-            component={CardEditor}
-            options={{ title: "Update" }}
-          />
-          <Stack.Screen
-            name="card"
-            component={Card}
-            options={{ title: "card" }}
-          />
-          <Stack.Screen
             name='list'
             component={List}
             options={{ title: 'Habits' }}
-          />
-          <Stack.Screen
-            name='postHabit'
-            component={PostHabit}
-            options={{ title: 'Add a new habit' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

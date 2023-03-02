@@ -3,30 +3,43 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from '../user_profile/user_context';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
+  enum LoginStatus {
+    Idle,
+    Pending,
+    Success,
+    Failure,
+  }
 
 export function Login() {
-  const { user, setUser, user_id, setUser_id } = useContext(UserContext);
+  const { user, setUser, setUser_id } = useContext(UserContext);
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ success, setSuccess ] = useState(false);
   const [ butt, setButt] = useState(false);
+  const [ loginStatus, setLoginStatus ] = useState(LoginStatus.Idle);
 
   const handlePress = () => {
+    setLoginStatus(LoginStatus.Pending);
     axios.get('https://final-api.onrender.com/users/')
     .then(({ data }) => {
       const foundUser = data.find((u: any) => u.username === username && u.password === password);
       if (foundUser) {
         setUser(foundUser.name);
         setUser_id(foundUser.id);
+        setLoginStatus(LoginStatus.Success);
         setSuccess(true);
       } else {
-        setUser('');
-        setUser_id(0);
-        setSuccess(false);
+        setTimeout(() => {
+          setLoginStatus(LoginStatus.Failure)
+          setUser('')
+          setUser_id(0)
+          setSuccess(false)
+        }, 1000);   
       }
     })
     .catch((error) => console.log(error));
     setButt(true);
+    setLoginStatus(LoginStatus.Pending);
   };
 
   const handleuChange = (text: string) => {
@@ -38,6 +51,7 @@ export function Login() {
   }
 
   const handlePressOut = () => {
+    setLoginStatus(LoginStatus.Idle);
     setUsername('');
     setPassword('');
     setSuccess(false);
@@ -65,19 +79,24 @@ export function Login() {
         onChangeText={handlepChange}
         secureTextEntry
       />
+      {(loginStatus === LoginStatus.Idle || loginStatus === LoginStatus.Pending || loginStatus === LoginStatus.Failure) && (
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      {success && user && (
+      )}
+      {loginStatus === LoginStatus.Success && (
         <TouchableOpacity style={styles.button2} onPress={handlePressOut}>
         <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       )}
       <View>
-      {butt && success && (
-        <Text style={styles.yMsg}>Login successful! user_id:{user_id}</Text>
+      {loginStatus === LoginStatus.Pending && (
+        <Text style={styles.lMsg}>Logging in...</Text>
       )}
-      {butt && !success && user === '' && (
+      {butt && success && (
+        <Text style={styles.yMsg}>Login successful!</Text>
+      )}
+      {butt && loginStatus === LoginStatus.Failure && (
         <Text style={styles.nMsg}>Invalid username or password</Text>
       )}
       </View>
@@ -131,6 +150,12 @@ const styles = StyleSheet.create({
   },
   nMsg: {
     color: '#E3735E',
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+  lMsg: {
+    color: '#B2BEB5',
     fontSize: 12,
     fontWeight: 'bold',
     marginTop: 20,

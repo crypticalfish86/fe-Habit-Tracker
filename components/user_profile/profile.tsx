@@ -8,6 +8,7 @@ interface UserData {
   avatar_url: string,
   description: string,
   streakCount: number,
+  habitCount: number,
   achievements: [],
   images: string[],
 }
@@ -18,6 +19,7 @@ export const Profile = () => {
     name: '',
     avatar_url: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp',
     description: 'describe yourself in three words :)',
+    habitCount: 0,
     streakCount: 0,
     achievements: [],
     images: [],
@@ -28,7 +30,7 @@ export const Profile = () => {
     'https://cdn-icons-png.flaticon.com/512/2655/2655510.png',
     'https://cdn-icons-png.flaticon.com/512/2655/2655504.png',
     'https://cdn-icons-png.flaticon.com/512/2655/2655527.png',
-    'https://cdn-icons-png.flaticon.com/512/2655/2655516.png'
+    'https://cdn-icons-png.flaticon.com/512/7005/7005093.png'
   ]);
   const [habitCount, setHabitCount] = useState(Math.floor(Math.random() * 15));
   const [streakCount, setStreakCount] = useState(Math.floor(Math.random() * 100));
@@ -42,9 +44,11 @@ export const Profile = () => {
   }, [user_id]);
 
   useEffect(() => {
-    axios.get(`https://final-api.onrender.com/users/${user_id}/habits`)
-    .then(({ data }) => setHabitCount(data.length))
-    .catch((error) => console.log(error))
+    if (user_id) {
+      axios.get(`https://final-api.onrender.com/users/${user_id}/habits`)
+      .then(({ data }) => setHabitCount(data.length))
+      .catch((error) => console.log(error))
+    }
   })
 
   const onRefresh = useCallback(() => {
@@ -159,12 +163,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   imageContainer: {
-    width: '25%',
+    width: '33%',
     padding: 5,
   },
   image: {
     width: '100%',
-    height: 75,
+    height: 100,
   },
   infoContainer: {
     flexDirection: 'row',
