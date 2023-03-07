@@ -2,6 +2,9 @@ Welcome to our React Native demo, showcasing our team's technical skills. Our te
 
 Our demo app is a demonstration of our proficiency in designing UI, managing data, and integrating APIs and third-party services to create  mobile applications.
 
+The Api we are working off of is also made by our 5 team members, you can view the github using the following link: 
+https://github.com/VladStoyanovADP/Habit-Tracker
+
 We aim stay up-to-date with the latest advancements in React Native and use the latest tools and techniques to develop our apps. We hope you enjoy our demo and the various features it provides. In order to run the demo on your phone in a bash terminal write "npx expo start" and begin viewing the app.
 
 Thank you for exploring our demo. If you would like to explore more of what our team members have produced please follow the links below to our personal githubs:
