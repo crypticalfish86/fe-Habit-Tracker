@@ -71,4 +71,13 @@ _Followed by:_
 $ npx expo start
 ```
 
+<br>
+
+_Once the app is fully loaded, you can use these details to login:_
+
+```
+username: roglesbee4
+password: rO7I3TrV8
+```
+
 </details>
