@@ -1,4 +1,5 @@
 import React from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './components/login_page/login';
@@ -12,37 +13,39 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <UserProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName='Splash'
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name='Splash' component={SplashScreen} />
-          <Stack.Screen
-            name='TabNavBar'
-            component={TabNavBar}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='login'
-            component={Login}
-            options={{ title: 'Login' }}
-          />
-          <Stack.Screen
-            name='profile'
-            component={Profile}
-            options={{ title: 'Personal' }}
-          />
-          <Stack.Screen
-            name='habits'
-            component={Habits}
-            options={{ title: 'Habits' }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UserProvider>
+    <PaperProvider>
+      <UserProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName='Splash'
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name='Splash' component={SplashScreen} />
+            <Stack.Screen
+              name='TabNavBar'
+              component={TabNavBar}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='login'
+              component={Login}
+              options={{ title: 'Login' }}
+            />
+            <Stack.Screen
+              name='profile'
+              component={Profile}
+              options={{ title: 'Personal' }}
+            />
+            <Stack.Screen
+              name='habits'
+              component={Habits}
+              options={{ title: 'Habits' }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserProvider>
+    </PaperProvider>
   );
 }

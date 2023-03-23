@@ -7,30 +7,30 @@ import {
   Keyboard,
   ScrollView,
   TouchableWithoutFeedback,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
-import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "../user_profile/user_context";
-import { RewardCard } from "./rewardcard";
-import uuid from "react-uuid";
-import { RewardForm } from "./rewardform";
-import { globalStyles } from "../../styles/styles";
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../user_profile/user_context';
+import { RewardCard } from './rewardcard';
+import uuid from 'react-uuid';
+import { RewardForm } from './rewardform';
 
 interface RewardsProps {
   user_id: number; // get user_id - this time from UserContext
 }
 
-interface Body { // from post request
+interface Body {
+  // from post request
   rewards_name: string;
   rewards_description: string;
   rewards_cost: string;
   user_id: number;
 }
 
-export interface UserRewards { // from get request
+export interface UserRewards {
+  // from get request
   rewards_name: string;
   rewards_description: string;
   rewards_cost: number;
@@ -64,8 +64,8 @@ export const Rewards = () => {
     Body.rewards_cost = JSON.parse(Body.rewards_cost);
     Body.user_id = user_id;
     const requestBody = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(Body),
     };
     try {
@@ -85,43 +85,45 @@ export const Rewards = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#E8F8F5'}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.header}>
           {userCurrency ? (
             <View style={styles.headerContent}>
-              <Text style={styles.infoCurrency}>Current Currency: {userCurrency}</Text>
+              <Text style={styles.infoCurrency}>
+                Current Currency: {userCurrency}
+              </Text>
             </View>
           ) : (
             <View>
               <Text>Loading...</Text>
             </View>
           )}
-          </View>
+        </View>
 
-          <Modal visible={modalOpen} animationType="slide">
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View style={styles.modalContent}>
-                <Pressable onPress={() => setModalOpen(false)}>
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    size={24}
-                    style={{ ...styles.modalToggle, ...styles.modalClose }}
-                  />
-                </Pressable>
-                <RewardForm postReward={postReward} user_id={user_id} />
-              </View>
-            </TouchableWithoutFeedback>
-          </Modal>
+        <Modal visible={modalOpen} animationType='slide'>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.modalContent}>
+              <Pressable onPress={() => setModalOpen(false)}>
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  size={24}
+                  style={{ ...styles.modalToggle, ...styles.modalClose }}
+                />
+              </Pressable>
+              <RewardForm postReward={postReward} user_id={user_id} />
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
 
-          <Pressable onPress={() => setModalOpen(true)}>
-            <FontAwesomeIcon
-              icon={faPlus}
-              size={24}
-              style={{ ...styles.modalToggle }}
-            />
-          </Pressable>
-      <ScrollView contentContainerStyle={styles.body}>
+        <Pressable onPress={() => setModalOpen(true)}>
+          <FontAwesomeIcon
+            icon={faPlus}
+            size={24}
+            style={{ ...styles.modalToggle }}
+          />
+        </Pressable>
+        <ScrollView contentContainerStyle={styles.body}>
           {userRewards.map((reward: UserRewards, index: number) => (
             <RewardCard
               key={uuid()}
@@ -135,24 +137,25 @@ export const Rewards = () => {
               setUserCurrency={setUserCurrency}
             />
           ))}
-      </ScrollView>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  // datatable: {
+  //   textAlign: 'center',
+  // },
   container: {
     flex: 1,
-    backgroundColor: '#E8F8F5',
   },
   header: {
-    backgroundColor: '#E8F8F5',
     alignItems: 'flex-start',
     padding: 20,
   },
   headerContent: {
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
   },
   body: {
     alignItems: 'center',
@@ -160,17 +163,17 @@ const styles = StyleSheet.create({
   },
   infoCurrency: {
     fontWeight: '800',
-    color: '#16A085',
+    color: '#000000',
   },
   modalToggle: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: "#f2f2f2",
+    borderColor: '#f2f2f2',
     padding: 10,
     borderRadius: 10,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   modalClose: {
     marginTop: 65,
